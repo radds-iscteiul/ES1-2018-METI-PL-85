@@ -18,6 +18,7 @@ import engine.Service;
 
 public class XMLManager {
 	    /**
+	     * Reads a .xml file
 	     * @param args the command line arguments
 	     * @throws ParserConfigurationException 
 	     * @throws IOException 
@@ -105,5 +106,6 @@ public class XMLManager {
 	    }
 	
 
+	    
 
 }
