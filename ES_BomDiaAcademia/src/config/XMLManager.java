@@ -16,18 +16,20 @@ import org.xml.sax.SAXException;
 public class XMLManager {
 	    /**
 	     * @param args the command line arguments
+	     * @throws ParserConfigurationException 
+	     * @throws IOException 
+	     * @throws SAXException 
 	     */
-	    public void readXML(String path) {
+	    public void readXML(String path) throws ParserConfigurationException, SAXException, IOException {
 	        
-	        try {
 	            //objetos para construir e fazer a leitura do documento
 	            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 	            DocumentBuilder builder = factory.newDocumentBuilder();
 	            
-	            String totalPath = "Users\\Rafael Dias\\Desktop\\serviços.xml";
+	            String totalPath = path.substring(2);
 	            System.out.println(totalPath);
 	            //abre e faz o parser de um documento xml de acordo com o nome passado no parametro
-	            Document doc = builder.parse("file:\\" +totalPath);
+	            Document doc = builder.parse("file:" +totalPath);
 	            
 	            //cria uma lista de pessoas. Busca no documento todas as tag pessoa
 	            NodeList listaDePessoas = doc.getElementsByTagName("servidor");
@@ -96,19 +98,7 @@ public class XMLManager {
 	                    }
 	                }
 	            }
-	            
-	        } catch (ParserConfigurationException ex) {
-	            Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
-	        } catch (SAXException ex) {
-	            Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
-	        } catch (IOException ex) {
-	            Logger.getLogger(XMLManager.class.getName()).log(Level.SEVERE, null, ex);
-	        }
 	    }
 	    
-	public static void main(String[] args) {
-		XMLManager x = new XMLManager();
-		x.readXML("ss");
-	}
 
 }
