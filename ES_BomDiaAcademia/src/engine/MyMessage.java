@@ -2,7 +2,7 @@ package engine;
 
 import java.util.Date;
 
-public class Message {
+public class MyMessage {
 	
 	private String from;
 	private Date time;
@@ -10,7 +10,7 @@ public class Message {
 	private String message;
 	
 	
-	public Message(String f, Date d, String h, String m) {
+	public MyMessage(String f, Date d, String h, String m) {
 		this.from = f;
 		this.time = d;
 		this.header = h;

@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
 
-import engine.Message;
+import engine.MyMessage;
 import utils.SpringUtilities;
 
 public class MessageWindow extends JFrame{
@@ -26,7 +26,7 @@ public class MessageWindow extends JFrame{
 	
 	private JTextArea body;
 	
-	public MessageWindow(Message m) {
+	public MessageWindow(MyMessage m) {
 
 		this.setLayout(new BorderLayout());
 		this.startComponents(m);
@@ -34,7 +34,7 @@ public class MessageWindow extends JFrame{
 
 	}
 
-	private void startComponents(Message m) {
+	private void startComponents(MyMessage m) {
 		
 		
 		
@@ -89,6 +89,6 @@ public class MessageWindow extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new MessageWindow(new Message("radds@iscte-iul.pt",new Date(),"Trabalho","Olá Rafael\n Sou o outro rafael, como está a correr o trabalho?"));
+		new MessageWindow(new MyMessage("radds@iscte-iul.pt",new Date(),"Trabalho","Olá Rafael\n Sou o outro rafael, como está a correr o trabalho?"));
 	}
 }
