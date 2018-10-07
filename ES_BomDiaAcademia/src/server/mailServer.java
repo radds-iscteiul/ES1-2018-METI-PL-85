@@ -61,7 +61,7 @@ public class mailServer {
 				Session session=Session.getDefaultInstance(props,
 						new javax.mail.Authenticator(){
 						protected PasswordAuthentication getPasswordAuthentication(){
-						return new PasswordAuthentication("xxx@gmail.com", "pass"); //email e password 
+						return new PasswordAuthentication("97bcosta@gmail.com", "Sincro.scherzy8"); //email e password 
 						}
 						}
 						
@@ -70,8 +70,8 @@ public class mailServer {
 				try{
 					System.out.println("entrou no try");
 				Message message = new MimeMessage(session);	
-				message.setFrom(new InternetAddress("xxx@gmail.com"));	
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("97bcosta@gmail.com ")); 
+				message.setFrom(new InternetAddress("97bcosta@gmail.com"));	
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("97bcosta@gmail.com")); 
 				message.setSubject("Olá");
 				message.setText("estou a enviar um email pelo eclipse");
 				System.out.println("Antes do transporte");
