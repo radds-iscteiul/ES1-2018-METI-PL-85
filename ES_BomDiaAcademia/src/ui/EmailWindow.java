@@ -3,9 +3,19 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -32,7 +42,6 @@ public class EmailWindow {
 	}
 	
 	private void addFrameContent(){
-		
 		JPanel labels = new JPanel(new SpringLayout());
 		
 		JLabel fromLabel = new JLabel("From: ", JLabel.TRAILING);
@@ -56,6 +65,48 @@ public class EmailWindow {
 		JTextArea body= new JTextArea ();
 		
 		JButton send = new JButton("Send");
+		send.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				String From = from.getText();
+				String To = to.getText();
+				String Subject = subject.getText();
+				String Body = body.getText();
+				
+				Properties props = new Properties();
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.socketFactory.port", "465"); //port para SSL configuraçao standart
+				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.port", "465"); 
+				
+				Session session=Session.getDefaultInstance(props,
+						new javax.mail.Authenticator(){
+						protected PasswordAuthentication getPasswordAuthentication(){
+						return new PasswordAuthentication("xxx@gmail.com", "pass"); //email e password 
+						}
+						}
+						
+						);
+				System.out.println("sessao feita");
+				try{
+				System.out.println("entrou no try");
+				Message message = new MimeMessage(session);	
+				message.setFrom(new InternetAddress(From));	
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(To)); 
+				message.setSubject(Subject);
+				message.setText(Body);
+				System.out.println("mensagem pronta a enviar");
+				Transport.send(message);
+				
+				JOptionPane.showMessageDialog(null, "message sent");
+				System.out.println("Mensagem enviada!");
+				
+				}catch(Exception e){
+					JOptionPane.showMessageDialog(null, e);
+					System.out.println("dentro do catch");
+				}
+			}
+		});
 		
 		SpringUtilities.makeCompactGrid(labels, 3, 2, 5, 5, 5, 5);
 		frame.add(labels, BorderLayout.NORTH);
@@ -64,6 +115,7 @@ public class EmailWindow {
 		
 	}
 	
+
 	public static void main(String[] args) {
 		EmailWindow email =new EmailWindow();
 		email.open();

@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Properties;
-
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -47,7 +47,7 @@ public class mailServer {
 	private void addFrameContent() {
 
 		JPanel panel = new JPanel();
-
+		
 		JButton mail = new JButton("Mail");
 		mail.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
@@ -56,7 +56,7 @@ public class mailServer {
 				props.put("mail.smtp.socketFactory.port", "465"); //port para SSL configuraçao standart
 				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.port", "465");
+				props.put("mail.smtp.port", "465"); 
 				
 				Session session=Session.getDefaultInstance(props,
 						new javax.mail.Authenticator(){
@@ -68,19 +68,20 @@ public class mailServer {
 						);
 				System.out.println("sessao feita");
 				try{
-					System.out.println("entrou no try");
+				System.out.println("entrou no try");
 				Message message = new MimeMessage(session);	
 				message.setFrom(new InternetAddress("xxx@gmail.com"));	
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("97bcosta@gmail.com")); 
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("xxx@gmail.com")); 
 				message.setSubject("Olá");
 				message.setText("estou a enviar um email pelo eclipse");
-				System.out.println("Antes do transporte");
+				System.out.println("mensagem pronta a enviar");
 				Transport.send(message);
-				JOptionPane.showMessageDialog(null, "message sent");
+				
+//				JOptionPane.showMessageDialog(null, "message sent");
 				System.out.println("Mensagem enviada!");
 				
 				}catch(Exception e){
-					JOptionPane.showMessageDialog(null, e);
+//					JOptionPane.showMessageDialog(null, e);
 					System.out.println("dentro do catch");
 				}
 			}
