@@ -60,7 +60,10 @@ public class MailServer {
 	}
 
 	public void receiveEmail(String pop3Host, String storeType, String user, String password) {
-		  try {
+//		pop3host = pop.gmail.com
+//		storeType = pop3
+		
+		try {
 		   Properties properties = new Properties();
 		   properties.put("mail.pop3.host", pop3Host);
 		   Session emailSession = Session.getDefaultInstance(properties);
