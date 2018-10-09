@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="C:/Users/Rafael Dias/Desktop/jar_files/joda-time-2.10.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Rafael Dias/Desktop/jar_files/mail-1.4.5.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Rafael Dias/Desktop/jar_files/mail-sender-0.5.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LibraryJava"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
