@@ -81,8 +81,8 @@ public class EmailWindow extends JFrame{
 	
 
 	public static void main(String[] args) {
-		String user = "";
-		String password = "";
+		String user = "metiG85.2018@gmail.com";
+		String password = "RbDi1802&";
 		EmailWindow email = new EmailWindow(user,password);
 	}
 }

@@ -17,8 +17,8 @@ import com.sun.mail.pop3.POP3Store;
 
 public class MailServer {
 
-	private String sender;
-	private String password;
+	private String sender; //metiG85_2018@gmail.com
+	private String password; //RbDi1802&
 	
 	public MailServer(String u, String pw) {
 		this.sender = u;
