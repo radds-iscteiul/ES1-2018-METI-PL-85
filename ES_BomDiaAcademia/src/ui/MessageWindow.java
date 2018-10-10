@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Date;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -11,73 +9,57 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
-
-import engine.MyMessage;
 import utils.SpringUtilities;
 
 public class MessageWindow extends JFrame{
 	
-	private JLabel fromLabel = new JLabel("From: ",JLabel.TRAILING);
-	private JTextField from;
-	private JLabel dateLabel = new JLabel("Date: ",JLabel.TRAILING);
-	private JTextField date;
-	private JLabel headerLabel = new JLabel("Description: ",JLabel.TRAILING);
-	private JTextField header;
+	protected JLabel fromLabel = new JLabel("From: ",JLabel.TRAILING);
+	protected JTextField from;
+	protected JLabel toLabel = new JLabel("To: ",JLabel.TRAILING);
+	protected JTextField to;
+	protected JLabel dateLabel = new JLabel("Date: ",JLabel.TRAILING);
+	protected JTextField date;
+	protected JLabel subjectLabel = new JLabel("Subject: ",JLabel.TRAILING);
+	protected JTextField subject;
 	
-	private JTextArea body;
+	protected JTextArea body;
 	
-	public MessageWindow(MyMessage m) {
+	public MessageWindow() {
 
 		this.setLayout(new BorderLayout());
-		this.startComponents(m);
+		this.startComponents();
 		this.start();
 
 	}
 
-	private void startComponents(MyMessage m) {
-		
-		
-		
-		from = new JTextField(m.getFrom(),15);
-		
-		from.setEditable(false);
-		
-		
-		date = new JTextField(m.getTime().toString(),15);
-		
-		date.setEditable(false);
-		
-		
-		header = new JTextField(m.getHeader(),15);
-		
-		header.setEditable(false);
-		
-		body = new JTextArea(m.getMessage());	
-		body.setEditable(false);
+	private void startComponents() {
 		
 		JPanel labels = new JPanel(new SpringLayout());
+		
+		fromLabel = new JLabel("From: ", JLabel.TRAILING);
 		labels.add(fromLabel,SpringLayout.EAST);
+		from = new JTextField(" ", 15);
 		fromLabel.setLabelFor(from);
 		labels.add(from);
 		
-		labels.add(dateLabel);
-		dateLabel.setLabelFor(date);
-		labels.add(date);
+		toLabel = new JLabel("To: ", JLabel.TRAILING);
+		labels.add(toLabel);
+		to = new JTextField(" ", 15);
+		toLabel.setLabelFor(to);
+		labels.add(to);
 		
-		labels.add(headerLabel);
-		headerLabel.setLabelFor(header);
-		labels.add(header);
+		subjectLabel = new JLabel("Subject: ", JLabel.TRAILING);
+		labels.add(subjectLabel);
+		subject = new JTextField(" ", 15);
+		subjectLabel.setLabelFor(subject);
+		labels.add(subject);
 		
+		body= new JTextArea ();
 		
-		SpringUtilities.makeCompactGrid(labels,
-                3, 2, //rows, cols
-                6, 6,        //initX, initY
-                6, 6);       //xPad, yPad
-	
-		
-		this.add(labels,BorderLayout.NORTH);
+		SpringUtilities.makeCompactGrid(labels, 3, 2, 5, 5, 5, 5);
+		this.add(labels, BorderLayout.NORTH);
 		this.add(body,BorderLayout.CENTER);
-
+		
 	}
 	
 	private void start() {
@@ -89,6 +71,6 @@ public class MessageWindow extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new MessageWindow(new MyMessage("radds@iscte-iul.pt",new Date(),"Trabalho","Olá Rafael\n Sou o outro rafael, como está a correr o trabalho?"));
+		new MessageWindow();
 	}
 }

@@ -7,14 +7,16 @@ import java.util.Set;
 public class MyMessage {
 	
 	private String from;
+	private String to;
 	private Date time;
 	private String header;
 	private String message;
 	private Set<Integer> conjindices;
 	
 	
-	public MyMessage(String f, Date d, String h, String m) {
+	public MyMessage(String f,String t, Date d, String h, String m) {
 		this.from = f;
+		this.to = t;
 		this.time = d;
 		this.header = h;
 		this.message = m;
@@ -47,6 +49,11 @@ public class MyMessage {
 
 	public String getMessage() {
 		return message;
+	}
+	
+	
+	public String getTo() {
+		return to;
 	}
 	
 
