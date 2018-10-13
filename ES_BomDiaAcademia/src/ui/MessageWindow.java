@@ -25,7 +25,7 @@ public class MessageWindow extends JFrame{
 	protected JTextArea body;
 	
 	public MessageWindow() {
-
+		super();
 		this.setLayout(new BorderLayout());
 		this.startComponents();
 		this.start();
@@ -64,7 +64,7 @@ public class MessageWindow extends JFrame{
 	
 	private void start() {
 		this.setPreferredSize(new Dimension(800, 500));
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
