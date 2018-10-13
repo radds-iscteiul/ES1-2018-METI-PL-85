@@ -60,19 +60,23 @@ public class ServicePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Service selected = ServicePanel.this.lista.getSelectedValue();
-				Controller.getInstance().toogleServiceState(selected);
-				ServicePanel.this.lista.repaint();
+				if(!ServicePanel.this.lista.isSelectionEmpty()) {
+					Controller.getInstance().toogleServiceState(selected);
+					ServicePanel.this.lista.repaint();
+				}
 			}
 		});
 		toggle.addMouseListener(new MouseListener() {
 			
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(ServicePanel.this.lista.getSelectedValue().isAtive()){
-					ServicePanel.this.toggle.setText("Disable");
-				} else {
-					ServicePanel.this.toggle.setText("Enable");
-				}		
+				if(!ServicePanel.this.lista.isSelectionEmpty()) {
+					if(ServicePanel.this.lista.getSelectedValue().isAtive()){
+						ServicePanel.this.toggle.setText("Disable");
+					} else {
+						ServicePanel.this.toggle.setText("Enable");
+					}
+				}
 			}
 			
 			@Override

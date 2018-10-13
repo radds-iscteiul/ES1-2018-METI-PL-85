@@ -56,6 +56,10 @@ public class MyMessage {
 		return to;
 	}
 	
+	@Override
+	public String toString() {
+		return "From: " +this.getFrom() + " || Subject: " + this.getHeader();
+	}
 
 
 	public int getNrOcorrencias() {

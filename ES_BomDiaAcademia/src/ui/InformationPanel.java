@@ -3,7 +3,11 @@ package ui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Date;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -28,8 +32,8 @@ public class InformationPanel extends JPanel{
 		
 		this.mainWindow = mw;
 		
-		
-		displayedMessages = new JList<MyMessage>();
+		DefaultListModel<MyMessage> model = new DefaultListModel<>();
+		displayedMessages = new JList<MyMessage>(model);
 		composeMessage = new JButton("Send email");
 		
 		JScrollPane scrollPane = new JScrollPane(displayedMessages);
@@ -48,12 +52,27 @@ public class InformationPanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SendEmailWindow(user, pw);				
+				new SendEmailWindow(user, pw);
 			}
 		});
 		if(user == "" && pw == "") {
 			composeMessage.setEnabled(false);
 		}
+		
+		displayedMessages.addMouseListener(new MouseAdapter() {
+		    public void mouseClicked(MouseEvent evt) {
+		        JList list = (JList)evt.getSource();
+		        if (evt.getClickCount() == 2) {
+		            int index = list.locationToIndex(evt.getPoint());
+		            MyMessage selectedMessage = (MyMessage)list.getSelectedValue();
+		            new ReadMessageWindow(selectedMessage);
+		        } else if (evt.getClickCount() == 3) {
+
+		            // Triple-click detected
+		            int index = list.locationToIndex(evt.getPoint());
+		        }
+		    }
+		});
 	}
 
 }
