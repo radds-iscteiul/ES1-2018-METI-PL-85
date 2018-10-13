@@ -62,44 +62,6 @@ public class MailServer {
 					System.out.println("dentro do catch");
 				}
 	}
-	
-	public void receiveEmail(String pop3Host, String storeType, String user, String password) {
-
-		try {
-//			objeto de sessão
-			Properties properties = new Properties();
-			properties.put("mail.pop3.host", pop3Host);
-			Session emailSession = Session.getDefaultInstance(properties);
-		
-//			criação da POP3 Message Store e conecção com o "pop server"
-			POP3Store emailStore = (POP3Store) emailSession.getStore(storeType);
-			emailStore.connect(user, password);
-
-//			criação e abertura do objeto ficheiro
-			Folder emailFolder = emailStore.getFolder("INBOX");
-			emailFolder.open(Folder.READ_ONLY);
-
-//			recuperar mensagens do ficheiro e imprimi-las
-			Message[] messages = emailFolder.getMessages();
-			for (int i = 0; i < messages.length; i++) {
-				Message message = messages[i];
-				System.out.println("==============================");
-				System.out.println("Email Number " + (i + 1));
-				System.out.println("Subject: " + message.getSubject());
-				System.out.println("From: " + message.getFrom()[0]);
-				System.out.println("Text: " + message.getContent().toString());
-			}
-
-			emailFolder.close(false);
-			emailStore.close();
-		} catch (NoSuchProviderException e) {
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 
 	public void receiveEmail(String pop3Host, String storeType, String user, String password) {
 //		pop3host = pop.gmail.com
@@ -129,9 +91,16 @@ public class MailServer {
 		   emailFolder.close(false);
 		   emailStore.close();
 
-		  } catch (NoSuchProviderException e) {e.printStackTrace();} 
-		  catch (MessagingException e) {e.printStackTrace();}
-		  catch (IOException e) {e.printStackTrace();}
+		  } catch (NoSuchProviderException e) {
+			  e.printStackTrace();
+		  } 
+		  catch (MessagingException e) {
+			  e.printStackTrace();
+		  }
+		  catch (IOException e) {
+			  e.printStackTrace();
+		  }
+		
 		 }
 	
 }

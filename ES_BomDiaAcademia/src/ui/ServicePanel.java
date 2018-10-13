@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -16,31 +15,36 @@ import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import engine.Controller;
 import engine.Service;
 
 public class ServicePanel extends JPanel{
 	
+	private MainWindow mainWindow;
 	
 	private JList<Service> lista;
 	private JButton pull = new JButton("Get messages");
 	private JButton toggle = new JButton("Enable/Disable");
 	
-	public ServicePanel(Map<String,Service> s) {
+	public ServicePanel(MainWindow mw) {
+		super();
 		this.setLayout(new BorderLayout());
+		mainWindow = mw;
+		
 		JPanel buttons = new JPanel();
 		buttons.add(pull);
 		buttons.add(toggle);
 		this.add(buttons,BorderLayout.SOUTH);
 		this.setVisible(true);
 		
-		this.setDefaultList(s);
+		this.setDefaultList(Controller.getInstance().getAllServices());
 		this.setListeners();
 		
 	}
-	private void setDefaultList(Map<String,Service> s){
+	private void setDefaultList(ArrayList<Service> s){
 		Service [] values = new Service[s.size()];
 		int i = 0;
-		for(Service service : s.values()){
+		for(Service service : s){
 			values[i] = service;
 			i++;
 		}
@@ -56,7 +60,7 @@ public class ServicePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Service selected = ServicePanel.this.lista.getSelectedValue();
-				selected.toogleAtive();
+				Controller.getInstance().toogleServiceState(selected);
 				ServicePanel.this.lista.repaint();
 			}
 		});
@@ -85,12 +89,13 @@ public class ServicePanel extends JPanel{
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				if(ServicePanel.this.lista.getSelectedValue().isAtive()){
-					ServicePanel.this.toggle.setText("Disable");
-				} else {
-					ServicePanel.this.toggle.setText("Enable");
+				if(!ServicePanel.this.lista.isSelectionEmpty()) {
+					if(ServicePanel.this.lista.getSelectedValue().isAtive()){
+						ServicePanel.this.toggle.setText("Disable");
+					} else {
+						ServicePanel.this.toggle.setText("Enable");
+					}
 				}
-				
 			}
 			
 			@Override
@@ -117,7 +122,7 @@ public class ServicePanel extends JPanel{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 List<Service> s = ServicePanel.this.getAtiveServices();
+				 List<Service> s = Controller.getInstance().getAtiveServices();
 				 System.out.println("Serviços Ativos: ");
 				 for (Service service : s) {
 					 System.out.println(service.toString());
@@ -126,15 +131,5 @@ public class ServicePanel extends JPanel{
 			}
 		});
 	}
-
-	public List<Service> getAtiveServices(){
-		List<Service> s = new ArrayList<Service>();
-		for (int i = 0; i < lista.getModel().getSize(); i++) {
-			Service aux = lista.getModel().getElementAt(i);
-			if(aux.isAtive()){
-				s.add(lista.getModel().getElementAt(i));
-			}
-		}
-		return s;
-	}
+	
 }
