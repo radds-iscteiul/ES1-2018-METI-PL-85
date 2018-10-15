@@ -2,7 +2,6 @@ package server;
 
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,14 +12,19 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.PasswordAuthentication;
 import javax.swing.JOptionPane;
+import java.io.IOException;
+import javax.mail.Folder;
+import javax.mail.MessagingException;
+import javax.mail.NoSuchProviderException;
+import com.sun.mail.pop3.POP3Store;
 
 import com.sun.mail.pop3.POP3Store;
 
 
 public class MailServer {
 
-	private String sender;
-	private String password;
+	private String sender; //metiG85_2018@gmail.com
+	private String password; //RbDi1802&
 	
 	public MailServer(String u, String pw) {
 		this.sender = u;
@@ -87,9 +91,16 @@ public class MailServer {
 		   emailFolder.close(false);
 		   emailStore.close();
 
-		  } catch (NoSuchProviderException e) {e.printStackTrace();} 
-		  catch (MessagingException e) {e.printStackTrace();}
-		  catch (IOException e) {e.printStackTrace();}
+		  } catch (NoSuchProviderException e) {
+			  e.printStackTrace();
+		  } 
+		  catch (MessagingException e) {
+			  e.printStackTrace();
+		  }
+		  catch (IOException e) {
+			  e.printStackTrace();
+		  }
+		
 		 }
 	
 }
