@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FileDialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import config.XMLManager;
+import engine.Controller;
 import engine.Service;
 
 public class ConfigurationWindow extends JFrame{
@@ -75,8 +75,9 @@ public class ConfigurationWindow extends JFrame{
 				if(path.getText().endsWith(".xml")){
 					XMLManager xml = new XMLManager();
 					try {
-						ArrayList<Service> lista = xml.readXML(path.getText());						
-						new MainWindow(lista);
+						ArrayList<Service> lista = xml.readXML(path.getText());		
+						Controller.getInstance().startMyController(lista);
+				
 						ConfigurationWindow.this.dispose();
 					} catch (ParserConfigurationException | SAXException | IOException e1) {
 						// TODO Auto-generated catch block

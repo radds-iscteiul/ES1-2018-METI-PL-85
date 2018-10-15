@@ -18,12 +18,14 @@ import utils.SpringUtilities;
 
 public class SendEmailWindow extends MessageWindow{
 	
-	private String sender;
 	private String password;
 	private JButton send;
 	
 	public SendEmailWindow(String u, String pw){
 		super();
+		this.password = pw;
+		this.from.setText(u);
+		this.from.setEditable(false);
 		this.addFrameContent();
 	}
 	
@@ -44,7 +46,7 @@ public class SendEmailWindow extends MessageWindow{
 				String subjectAux = subject.getText();
 				String bodyAux = body.getText();
 				
-				MailServer mailServer = new MailServer(SendEmailWindow.this.sender,SendEmailWindow.this.password);
+				MailServer mailServer = new MailServer(SendEmailWindow.this.from.getText(),SendEmailWindow.this.password);
 				mailServer.sendEmail(fromAux, toAux, subjectAux, bodyAux);
 			}
 		});
