@@ -17,6 +17,6 @@
 	<classpathentry kind="lib" path="libs/joda-time-2.10.jar"/>
 	<classpathentry kind="lib" path="libs/mail-1.4.5.jar"/>
 	<classpathentry kind="lib" path="libs/mail-sender-0.5.1.jar"/>
-	<classpathentry kind="lib" path="D:/Eclipse/Git/ES1-2018-METI-PL-85/ES_BomDiaAcademia/libs/restfb-2.9.0.jar"/>
+	<classpathentry kind="lib" path="libs/restfb-2.9.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
