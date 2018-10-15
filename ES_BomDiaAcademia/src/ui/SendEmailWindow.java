@@ -29,6 +29,8 @@ public class SendEmailWindow extends MessageWindow{
 		this.addFrameContent();
 	}
 	
+	
+	
 	public void open(){
 		this.pack();
 		this.setVisible(true);
