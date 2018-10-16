@@ -45,6 +45,7 @@ public class FilterWindow {
 		open();
 	}
 
+	
 	public void open(){
 		frame.pack();
 		frame.setVisible(true);
@@ -113,7 +114,7 @@ public class FilterWindow {
 		Date d =  new Date(0);
 		String h = "teste";
 		String m = "vamos procurar uma palavra nesta mensagem";
-		String palavra = "palavra nesta";
+		String palavra = "procurar uma palavra";
 		MyMessage msg = new MyMessage(f, t, d, h, m);
 		FilterWindow fw = new FilterWindow();
 		fw.procurar(msg, palavra);
