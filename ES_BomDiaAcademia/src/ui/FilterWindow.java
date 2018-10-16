@@ -6,8 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -24,11 +28,13 @@ import javax.swing.event.ListSelectionListener;
 import engine.MyMessage;
 
 
+
 public class FilterWindow {
 
 	private JFrame frame;
 	private String procura="";
 	private MyMessage message;
+
 
 	public FilterWindow(){
 		frame=new JFrame();
@@ -58,7 +64,8 @@ public class FilterWindow {
 		enter.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				procura = palavra.getText();
-				leFicheiro(palavra.getText());
+				procurar(message, procura);
+				
 
 			}
 		});
@@ -72,43 +79,45 @@ public class FilterWindow {
 		frame.add(sul, BorderLayout.SOUTH);
 	}
 
-	public void leFicheiro(String palavra){
-		File file = new File("./mensagem/testarFiltro.txt");
-
-		try{
-			Scanner	scanner = new Scanner(file);
-			int l=0;
-			String text="";
-			while(scanner.hasNextLine()){
-				String s = scanner.nextLine();
-				text+=s + " ";
-
-				for(int i = 0; ( i < text.length()-palavra.length()); i++) {
-
-					String aux = text.substring(i, i+palavra.length());
-
-					if( palavra.equals(aux)) {
-						System.out.println("Found");
-
-					}
-
-				}
-
-			}
-			scanner.close();
-
-		} catch(FileNotFoundException e){
-			e.printStackTrace();
-		}}
+	
 
 
 	public String getProcura() {
 		return procura;
 	}
 
-	public static void main(String[] args) {
-		FilterWindow f = new FilterWindow();
+	public MyMessage procurar (MyMessage message, String palavra){
+		String m = message.getMessage();
+		
+          
+		for(int i = 0; ( i < m.length()-palavra.length()); i++) {
 
+			String aux = m.substring(i, i+palavra.length());
+			if( palavra.equals(aux)) {
+				System.out.println("Found");
+			}
+			
+		}
+		if (m != null && m.toLowerCase().contains(palavra)) {
+				System.out.println("Palavra encontrada na mensagem : " + palavra );		
+		}
+		
+		return message;
+	}
+
+
+
+	public static void main(String[] args) {
+		String f = "imlde";
+		String t = "boss";
+		Date d =  new Date(0);
+		String h = "teste";
+		String m = "vamos procurar uma palavra nesta mensagem";
+		String palavra = "palavra nesta";
+		MyMessage msg = new MyMessage(f, t, d, h, m);
+		FilterWindow fw = new FilterWindow();
+		fw.procurar(msg, palavra);
+		
 	}
 
 }
