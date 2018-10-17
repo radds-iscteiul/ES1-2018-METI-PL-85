@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="libs/jackson-databind-2.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/jmustache-1.9.jar"/>
 	<classpathentry kind="lib" path="libs/joda-time-2.10.jar"/>
-	<classpathentry kind="lib" path="libs/mail-1.4.5.jar"/>
+	<classpathentry kind="lib" path="libs/mail-1.4.5.jar" sourcepath="libs/mail-1.4.5.jar"/>
 	<classpathentry kind="lib" path="libs/mail-sender-0.5.1.jar"/>
 	<classpathentry kind="lib" path="libs/restfb-2.9.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
