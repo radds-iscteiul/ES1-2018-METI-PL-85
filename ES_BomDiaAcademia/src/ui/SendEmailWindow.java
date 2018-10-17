@@ -17,10 +17,10 @@ import server.MailServer;
 import utils.SpringUtilities;
 
 public class SendEmailWindow extends MessageWindow{
-	
+
 	private String password;
 	private JButton send;
-	
+
 	public SendEmailWindow(String u, String pw){
 		super();
 		this.password = pw;
@@ -28,14 +28,13 @@ public class SendEmailWindow extends MessageWindow{
 		this.from.setEditable(false);
 		this.addFrameContent();
 	}
-	
-	
-	
+
+
 	public void open(){
 		this.pack();
 		this.setVisible(true);
 	}
-	
+
 	private void addFrameContent(){
 
 		send = new JButton("Send");
@@ -45,15 +44,15 @@ public class SendEmailWindow extends MessageWindow{
 				String toAux = to.getText();
 				String subjectAux = subject.getText();
 				String bodyAux = body.getText();
-				
+
 				MailServer mailServer = new MailServer(SendEmailWindow.this.from.getText(),SendEmailWindow.this.password);
 				mailServer.sendEmail(fromAux, toAux, subjectAux, bodyAux);
 			}
 		});
 		this.add(send, BorderLayout.SOUTH);
-		
+
 	}
-	
+
 
 	public static void main(String[] args) {
 		String user = "metiG85.2018@gmail.com";
