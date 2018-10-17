@@ -85,5 +85,29 @@ public class Controller{
 	public void toogleServiceState(Service s) {
 		s.toogleAtive();
 	}
+	
+	
+	/**
+	 * @author Inês Duarte
+	 * @param message
+	 * @param palavra
+	 * @return True if you find the word you want within a message
+	 */
+	
+	public boolean procurar (MyMessage message, String palavra){
+		String m = message.getMessage();
+		
+		for(int i = 0; ( i < m.length()-palavra.length()); i++) {
+
+			String aux = m.substring(i, i+palavra.length());
+			if( palavra.equals(aux)) {
+				System.out.println("Found");
+				System.out.println("Palavra encontrada na mensagem : " + palavra );	
+				return true;
+			}	
+		}				return false;
+	}
+	
+	
 
 }
