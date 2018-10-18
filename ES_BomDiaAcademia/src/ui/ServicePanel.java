@@ -22,9 +22,9 @@ public class ServicePanel extends JPanel{
 	
 	private MainWindow mainWindow;
 	
-	private JList<Service> lista;
+	public JList<Service> lista;
 	private JButton pull = new JButton("Get messages");
-	private JButton toggle = new JButton("Enable/Disable");
+	public JButton toggle = new JButton("Enable/Disable");
 	
 	public ServicePanel(MainWindow mw) {
 		super();
