@@ -23,7 +23,7 @@ public class Controller{
 	
 	private JFrame mainWindow;
 	private Map<ServiceType,Service> servicos;
-	private List<MyMessage> allMessages;
+	private List<EmailMessage> allMessages;
 	
 	private Controller() {
 	}
@@ -39,7 +39,7 @@ public class Controller{
 		servicos = new HashMap<ServiceType,Service>();
 		this.readConfigurations(s);	
 		mainWindow = new MainWindow();
-		allMessages = new ArrayList<MyMessage>();
+		allMessages = new ArrayList<EmailMessage>();
 	}
 	/**
 	 * @author Rafael Dias
@@ -94,7 +94,7 @@ public class Controller{
 	 * @return True if you find the word you want within a message
 	 */
 	
-	public boolean procurar (MyMessage message, String palavra){
+	public boolean procurar (EmailMessage message, String palavra){
 		String m = message.getMessage();
 		
 		for(int i = 0; ( i < m.length()-palavra.length()); i++) {

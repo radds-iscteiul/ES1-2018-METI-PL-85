@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import engine.Controller;
-import engine.MyMessage;
+import engine.EmailMessage;
 import engine.Service;
 import engine.ServiceType;
 
@@ -22,7 +22,7 @@ public class InformationPanel extends JPanel{
 	
 	private MainWindow mainWindow;
 	
-	private JList<MyMessage> displayedMessages;
+	private JList<EmailMessage> displayedMessages;
 	private JButton composeMessage;
 	
 	
@@ -32,8 +32,8 @@ public class InformationPanel extends JPanel{
 		
 		this.mainWindow = mw;
 		
-		DefaultListModel<MyMessage> model = new DefaultListModel<>();
-		displayedMessages = new JList<MyMessage>(model);
+		DefaultListModel<EmailMessage> model = new DefaultListModel<>();
+		displayedMessages = new JList<EmailMessage>(model);
 		composeMessage = new JButton("Send email");
 		
 		JScrollPane scrollPane = new JScrollPane(displayedMessages);
@@ -64,7 +64,7 @@ public class InformationPanel extends JPanel{
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
-		            MyMessage selectedMessage = (MyMessage)list.getSelectedValue();
+		            EmailMessage selectedMessage = (EmailMessage)list.getSelectedValue();
 		            new ReadMessageWindow(selectedMessage);
 		        } else if (evt.getClickCount() == 3) {
 

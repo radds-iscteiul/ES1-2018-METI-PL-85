@@ -2,16 +2,16 @@ package ui;
 
 import java.util.Date;
 
-import engine.MyMessage;
+import engine.EmailMessage;
 
 public class ReadMessageWindow extends MessageWindow{
 
-	public ReadMessageWindow(MyMessage m) {
+	public ReadMessageWindow(EmailMessage m) {
 		super();
 		loadMessageDetails(m);
 	}
 
-	private void loadMessageDetails(MyMessage m) {
+	private void loadMessageDetails(EmailMessage m) {
 		this.from.setText(m.getFrom());
 		this.from.setEditable(false);
 		
@@ -26,6 +26,6 @@ public class ReadMessageWindow extends MessageWindow{
 	}
 	
 	public static void main(String[] args) {
-		ReadMessageWindow m = new ReadMessageWindow(new MyMessage("radds", "r", new Date(), "Oi", "texto"));
+		ReadMessageWindow m = new ReadMessageWindow(new EmailMessage("radds", "r", "Oi", new Date(), "texto"));
 	}
 }
