@@ -65,7 +65,9 @@ public class InformationPanel extends JPanel{
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
 		            EmailMessage selectedMessage = (EmailMessage)list.getSelectedValue();
-		            new ReadMessageWindow(selectedMessage);
+		            if(selectedMessage != null) {
+		            	new ReadMessageWindow(selectedMessage);
+		            }
 		        } else if (evt.getClickCount() == 3) {
 
 		            // Triple-click detected
