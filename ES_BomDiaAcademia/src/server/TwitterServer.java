@@ -1,7 +1,9 @@
 package server;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import engine.Tweet;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -24,19 +26,20 @@ public class TwitterServer {
     	this.client = tf.getInstance();
 	}
 	
-	public void getTweetsFromUser( String user, int numberOfTweets) {
+	public List<Tweet> getTweetsFromUser( String user, int numberOfTweets) {
 		Paging p = new Paging();
 		p.setCount(numberOfTweets);
         List<Status> statuses;
+        List<Tweet> tweets = new ArrayList<Tweet>();
 		try {
-			statuses = client.getUserTimeline("iscteiul",p);
-			System.out.println("------------------------\n Showing home timeline \n------------------------");
+			statuses = client.getUserTimeline(user,p);
+			//System.out.println("------------------------\n Showing home timeline \n------------------------");
 			//int counter=0;
 			//int counterTotal = 0;
 	        for (Status status : statuses) {
-				// Filters only tweets from user "catarina"
-				if (status.getUser().getName() != null && status.getText().contains("")) {
-					System.out.println(status.getUser().getName() + ":" + status.getText());
+					if (status.getUser().getName() != null /*&& status.getText().contains("")*/) {
+					//System.out.println(status.getUser().getName() + ":" + status.getText());
+					tweets.add(new Tweet(status.getUser().getName(),status.getUser().getCreatedAt(),status.getText()));
 					//counter++;
 				}
 				//counterTotal++;
@@ -45,7 +48,12 @@ public class TwitterServer {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+        return tweets;
         }
 	
+	public static void main(String[] args) {
+		TwitterServer tw = new TwitterServer();
+		List<Tweet> lista = tw.getTweetsFromUser("miguelao77", 10);
+		System.out.println(lista);
+	}
 }
