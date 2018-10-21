@@ -35,6 +35,12 @@ public class Controller{
 	      return INSTANCE;
 	}
 
+	/**
+	 * 
+	 * @param ArrayList<Service>
+	 * 
+	 * Starts the controller with the list of services obtained from the configuration file
+	 */
 	public void startMyController(ArrayList<Service> s) {
 		servicos = new HashMap<ServiceType,Service>();
 		this.readConfigurations(s);	
@@ -42,8 +48,8 @@ public class Controller{
 		allMessages = new ArrayList<EmailMessage>();
 	}
 	/**
-	 * @author Rafael Dias
-	 * @param s
+	 * 
+	 * @param ArrayList<Service>
 	 * Initializes from the ArrayList given by the XMLManager which provides the configuration file data.
 	 */
 	private void readConfigurations(ArrayList<Service> s) {
@@ -52,8 +58,8 @@ public class Controller{
 		}
 	}
 	/**
-	 * @author Rafael Dias
-	 * @param service
+	 * 
+	 * @param ServiceType
 	 * @return Given an hashMap <key> this method will return its value
 	 */
 	public Service getService(ServiceType service) {		
@@ -61,8 +67,8 @@ public class Controller{
 	}
 	
 	/**
-	 * 
-	 * @return All service available from the configuration
+	 *
+	 * @return All existing services from the configuration
 	 */
 	public ArrayList<Service> getAllServices() {
 		ArrayList<Service> s = new ArrayList<Service>();
@@ -72,6 +78,10 @@ public class Controller{
 		}
 		return s;
 	}
+	/**
+	 * 
+	 * @return All currently ative services
+	 */
 	public List<Service> getAtiveServices(){
 		List<Service> s = new ArrayList<Service>();
 		for(Service service : this.servicos.values()) {
@@ -82,25 +92,31 @@ public class Controller{
 		return s;
 	}
 	
+	/**
+	 * 
+	 * @return main window of the application
+	 */
 	public JFrame getMainWindow() {
 		return mainWindow;
 	}
 	
+	/**
+	 * 
+	 * @param Service
+	 * 
+	 * Toggle service's state (ative/ not ative)
+	 */
 	public void toogleServiceState(Service s) {
 		s.toogleAtive();
 	}
 	
 	
 	/**
-	 * @author Inês Duarte
-	 * @param message
-	 * @param palavra
-	 * @return True if you find the word you want within a message
+	 * @author Ines Duarte
+	 * @param MyMessage
+	 * @param String
+	 * @return True if the given word is within the given message
 	 */
-	
-
-	
-
 	public boolean wordFilter (MyMessage message, String palavra){
 		String m = message.getMessage();
 		
