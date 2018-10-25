@@ -2,7 +2,7 @@ package engine;
 
 import java.util.Date;
 
-public class MyMessage {
+public abstract class MyMessage {
 
 	private String from;
 	private Date time;

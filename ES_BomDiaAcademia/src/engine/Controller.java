@@ -1,6 +1,7 @@
 package engine;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class Controller{
 	
 	private JFrame mainWindow;
 	private Map<ServiceType,Service> servicos;
-	private List<EmailMessage> allMessages;
+	private List<MyMessage> allMessages;
 	
 	private Controller() {
 	}
@@ -45,7 +46,9 @@ public class Controller{
 		servicos = new HashMap<ServiceType,Service>();
 		this.readConfigurations(s);	
 		mainWindow = new MainWindow();
-		allMessages = new ArrayList<EmailMessage>();
+		allMessages = new ArrayList<MyMessage>();
+		allMessages.add(new EmailMessage("Rafael", "Inês","Aprsentação",new Date(), "Olá, sou o Rafael, tudo bem?"));
+		allMessages.add(new EmailMessage("Rafael","Marta","Declaração", new Date(), "Two week in a virginia jail, for my lover, for my lover"));
 	}
 	/**
 	 * 
@@ -110,6 +113,9 @@ public class Controller{
 		s.toogleAtive();
 	}
 	
+	public List<MyMessage> getAllMessages() {
+		return this.allMessages;
+	}
 	
 	/**
 	 * @author Ines Duarte
