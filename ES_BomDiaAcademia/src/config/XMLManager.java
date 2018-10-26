@@ -113,15 +113,11 @@ public class XMLManager {
 	    	configXML.appendChild(root);
 	    	
 	    	Element s;
-	    	int id = 1;
 	    	for (Service service : servicos) {
-	    		s = this.composeServiceToXML(service, configXML,id);
+	    		s = this.composeServiceToXML(service, configXML);
 		    	root.appendChild(s);
-		    	id++;
 			}
-	    	
-	    	
-	    	
+	    	    	
 	    	TransformerFactory transformerFactory = TransformerFactory.newInstance();
 	    	Transformer transformer = transformerFactory.newTransformer();
 	    	
@@ -131,10 +127,10 @@ public class XMLManager {
 	    	transformer.transform(documentoFonte, documentoFinal);
 	    }
 	    
-	    private Element composeServiceToXML(Service s, Document configXML,int idNumber) {
+	    private Element composeServiceToXML(Service s, Document configXML) {
 	    	Element service = configXML.createElement("servidor");
 	    	Attr id = configXML.createAttribute("id");
-	    	id.setValue(String.valueOf(idNumber));
+	    	id.setValue(String.valueOf(s.getId()));
 	    	service.setAttributeNode(id);
 	    
 	    	

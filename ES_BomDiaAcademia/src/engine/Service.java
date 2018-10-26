@@ -24,6 +24,9 @@ public class Service {
 	public ServiceType getName() {
 		return this.name;
 	}
+	public int getId() {
+		return this.id;
+	}
 	
 	public String getUser() {
 		return this.user;
