@@ -14,46 +14,81 @@ import twitter4j.conf.ConfigurationBuilder;
 public class TwitterServer {
 
 	Twitter client;
-	
+
 	public TwitterServer() {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
-    	cb.setDebugEnabled(true)
-    	  .setOAuthConsumerKey("W1f0VvgWPfT8OBqVxvy4Mw")
-    	  .setOAuthConsumerSecret("zKH2yAtRyefwsgOO8h8Szc4kru68iEm95QmIG7svw")
-    	  .setOAuthAccessToken("36481851-VhzByC4f9MSsZES1QZQ4e4iBvA9bWGLyv9HKFpy7c")
-    	  .setOAuthAccessTokenSecret("OahDuXF2Lhl5xlNYALhYZir6xSflAxKP9Zh89T05po");
-    	TwitterFactory tf = new TwitterFactory(cb.build());
-    	this.client = tf.getInstance();
+		cb.setDebugEnabled(true)
+		.setOAuthConsumerKey("UOUWNb7oxNSvIuH21RnEpn7UW")
+		.setOAuthConsumerSecret("XHVlIQFiAnSZnJXuZIJQ0iPE4yBVkdlhcTnMcvp5m4Bhzhh6BQ")
+		.setOAuthAccessToken("1055189230949986308-2HDQugmJqhyGcuujnn3DiBD99WdveS")
+		.setOAuthAccessTokenSecret("4RJNByPrUNCMEOgXw0kfQ97jxpbEDiE1K2zZFZ9Mirv5w");
+		TwitterFactory tf = new TwitterFactory(cb.build());
+		this.client = tf.getInstance();
+
 	}
-	
+
 	public List<Tweet> getTweetsFromUser( String user, int numberOfTweets) {
 		Paging p = new Paging();
 		p.setCount(numberOfTweets);
-        List<Status> statuses;
-        List<Tweet> tweets = new ArrayList<Tweet>();
+		List<Status> statuses;
+		List<Tweet> tweets = new ArrayList<Tweet>();
 		try {
 			statuses = client.getUserTimeline(user,p);
 			//System.out.println("------------------------\n Showing home timeline \n------------------------");
 			//int counter=0;
 			//int counterTotal = 0;
-	        for (Status status : statuses) {
-					if (status.getUser().getName() != null /*&& status.getText().contains("")*/) {
+			for (Status status : statuses) {
+				if (status.getUser().getName() != null /*&& status.getText().contains("")*/) {
 					//System.out.println(status.getUser().getName() + ":" + status.getText());
 					tweets.add(new Tweet(status.getUser().getName(),status.getUser().getCreatedAt(),status.getText()));
 					//counter++;
 				}
 				//counterTotal++;
-		}
-	    } catch (TwitterException e) {
+			}
+		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return tweets;
-        }
+		return tweets;
+	}
+
 	
-	public static void main(String[] args) {
+	public void tweetar () throws TwitterException{
+		String message = "felicitem a ines :) ";
+		try {
+
+			try {
+				// Lança IllegalStateException se o token de acesso estiver disponível
+
+				client.getOAuthRequestToken();
+
+				// Se não ocorrer significa que o acesso a conta não foi permitida
+				System.out.println("Acesso Negado.");
+
+			} catch (IllegalStateException ie) {
+				// Verifica se possui autorização
+				if (!client.getAuthorization().isEnabled()) {
+					System.out.println("OAuth Consumer key/secret inválido.");
+				} else {
+					Status status = client.updateStatus(message);
+					System.out.println("Tweet publicado! [" + status.getText() + "].");
+					// client.sendDirectMessage("MetiG85", message);
+				}
+			}
+		} catch (TwitterException te) {
+			System.out.println("Falha ao obter a timeline: " + te.getMessage());
+		}
+	}
+
+
+	
+
+	public static void main(String[] args) throws TwitterException {
 		TwitterServer tw = new TwitterServer();
-		List<Tweet> lista = tw.getTweetsFromUser("miguelao77", 10);
-		System.out.println(lista);
+	
+//		List<Tweet> lista = tw.getTweetsFromUser("G85Ti", 10);
+//		System.out.println(lista);
+		
+		tw.tweetar();
 	}
 }
