@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -33,7 +34,7 @@ public class ServicePanel extends JPanel{
 	
 	public JList<Service> lista;
 	private JButton pull = new JButton("Get messages");
-	public JButton toggle = new JButton("Enable/Disable");
+	public JButton toggle = new JButton("Enable");
 	
 	public ServicePanel(MainWindow mw) {
 		super();
@@ -41,6 +42,8 @@ public class ServicePanel extends JPanel{
 		mainWindow = mw;
 		
 		JPanel buttons = new JPanel();
+		pull.setPreferredSize(new Dimension(150,25));
+		toggle.setPreferredSize(new Dimension(100,25));
 		buttons.add(pull);
 		buttons.add(toggle);
 		this.add(buttons,BorderLayout.SOUTH);
@@ -58,6 +61,7 @@ public class ServicePanel extends JPanel{
 			i++;
 		}
 		lista = new JList(values);
+		lista.setFixedCellHeight(25);
 		JScrollPane scrollPane = new JScrollPane(lista);
 		this.add(scrollPane,BorderLayout.CENTER);
 		lista.setCellRenderer(new MyCellRenderer());

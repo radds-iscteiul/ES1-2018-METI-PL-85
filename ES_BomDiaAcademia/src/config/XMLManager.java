@@ -73,6 +73,7 @@ public class XMLManager {
 	                    String user = "";
 	                    String password = "";
 	                    String watch = "";
+	                    boolean ative = false;
 	                    	                   
 	                    for (int j = 0; j < tamanhoListaFilhos; j++) {
 	                        	                       
@@ -98,15 +99,17 @@ public class XMLManager {
 	                                case "password":
 	                                    password = elementoFilho.getTextContent();
 	                                    break;
+	                                case "ative":
+	                                	ative = Boolean.valueOf(elementoFilho.getTextContent());
 	                            }
 	                        }                        
 	                    }
 	                    if(nome.equals("Twitter")) {
-	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,watch));
+	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch));
 	                    } else if(nome.equals("Facebook")) {
-	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password));
+	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
 	                    } else if(nome.equals("Email")) {
-	                    	 listaServicos.add(new Service(Integer.valueOf(id),nome,user,password));
+	                    	 listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
 	                    }
 	                    
 	                }
@@ -164,7 +167,7 @@ public class XMLManager {
 	    public static void main(String[] args) {
 	    	
 	    	ArrayList<Service> services = new ArrayList<Service>();
-	    	services.add(new Service(1, "Email", "a@gmail.com", "password"));
+	    	services.add(new Service(1, "Email", "a@gmail.com", "password",true));
 			try {
 				new XMLManager().writeXML(services);
 			} catch (TransformerException | ParserConfigurationException e) {

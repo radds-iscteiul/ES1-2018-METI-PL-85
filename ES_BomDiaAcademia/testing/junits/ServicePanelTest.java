@@ -17,8 +17,8 @@ import ui.ServicePanel;
 
 public class ServicePanelTest {
 	
-	Service email = new Service(1,"Email", "metiG85.2018@gmail.com", "pw");
-	Service facebook = new Service(2,"Facebook","Bárbara","pw");	
+	Service email = new Service(1,"Email", "metiG85.2018@gmail.com", "pw",true);
+	Service facebook = new Service(2,"Facebook","Bárbara","pw",true);	
 	ArrayList<Service> aux = new ArrayList<Service>();
 	
 	Controller controller = Controller.getInstance();

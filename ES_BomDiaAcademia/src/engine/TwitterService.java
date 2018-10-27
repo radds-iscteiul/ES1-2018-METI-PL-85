@@ -8,8 +8,8 @@ public class TwitterService extends Service {
 
 	private String watch;
 	
-	public TwitterService(int id, String n, String u, String p, String w) {
-		super(id, n, u, p);
+	public TwitterService(int id, String n, String u, String p,boolean at, String w) {
+		super(id, n, u, p,at);
 		this.watch = w;
 	}
 	

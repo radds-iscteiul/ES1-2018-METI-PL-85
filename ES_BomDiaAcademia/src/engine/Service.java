@@ -12,13 +12,14 @@ public class Service {
 	private String user;
 	private String password;
 	
-	private boolean ative = true;
+	private boolean ative;
 	
-	public Service(int id, String n, String u, String p) {
+	public Service(int id, String n, String u, String p, boolean at) {
 		this.id = id;
 		this.name = this.identifyService(n);
 		this.user = u;
 		this.password = p;
+		this.ative = at;
 	}
 	public boolean toogleAtive() {
 		ative = !ative;

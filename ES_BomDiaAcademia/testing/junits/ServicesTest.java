@@ -11,7 +11,7 @@ public class ServicesTest {
 
 	@Test
 	public void testServicesInit() {
-		Service service=new Service(1, "Email", "Rafael", "pass");
+		Service service=new Service(1, "Email", "Rafael", "pass",true);
 		
 		assertEquals(service.isAtive(), true); 
 	}
