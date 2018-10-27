@@ -37,6 +37,7 @@ public class ConfigurationWindow extends JFrame{
 
 	public ConfigurationWindow() {
 		this.setLayout(new BorderLayout());
+		this.setResizable(false);
 		this.startComponents();
 		this.start();
 	}

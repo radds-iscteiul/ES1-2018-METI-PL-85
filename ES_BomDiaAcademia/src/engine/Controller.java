@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 
+import config.XMLManager;
 import ui.MainWindow;
 
 /**
@@ -147,6 +150,16 @@ public class Controller{
 		return false;
 	}
 	
+	
+	public void saveServicesToXML() {
+		XMLManager xmlM = new XMLManager();
+		try {
+			xmlM.writeXML(this.getAllServices());
+		} catch (TransformerException | ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 }

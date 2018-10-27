@@ -40,19 +40,16 @@ public class MessageWindow extends JFrame{
 		
 		JPanel labels = new JPanel(new SpringLayout());
 		
-		fromLabel = new JLabel("From: ", JLabel.TRAILING);
 		labels.add(fromLabel,SpringLayout.EAST);
 		from = new JTextField(" ", 15);
 		fromLabel.setLabelFor(from);
 		labels.add(from);
 		
-		toLabel = new JLabel("To: ", JLabel.TRAILING);
 		labels.add(toLabel);
 		to = new JTextField(" ", 15);
 		toLabel.setLabelFor(to);
 		labels.add(to);
 		
-		subjectLabel = new JLabel("Subject: ", JLabel.TRAILING);
 		labels.add(subjectLabel);
 		subject = new JTextField(" ", 15);
 		subjectLabel.setLabelFor(subject);

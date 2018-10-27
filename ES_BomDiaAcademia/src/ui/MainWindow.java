@@ -15,6 +15,7 @@ public class MainWindow extends JFrame{
 	public MainWindow() {
 		super("BDA - Bom dia academia");
 		this.setLayout(new BorderLayout());
+		this.setResizable(false);
 		
 		servicePanel = new ServicePanel(this);
 		informationPanel = new InformationPanel(this);

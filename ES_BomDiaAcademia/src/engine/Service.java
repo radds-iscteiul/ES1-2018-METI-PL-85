@@ -40,6 +40,13 @@ public class Service {
 		return this.ative;
 	}
 	
+	public void setUser(String u) {
+		this.user = u;
+	}
+	public void setPassword(String p) {
+		this.password = p;
+	}
+	
 	public ServiceType identifyService(String service) {
 		if (service.equals("Email")) {
 			return ServiceType.EMAIL;
