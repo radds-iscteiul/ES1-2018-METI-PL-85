@@ -58,7 +58,7 @@ public class FacebookServer {
 				counterTotal++;
 			}
 		}
-		System.out.println("-------------\nNº of Results: " + counter5+"/"+counterTotal);
+		System.out.println("-------------\nNï¿½ of Results: " + counter5+"/"+counterTotal);
 	}
 	
 	public static void main(String[] args) {
