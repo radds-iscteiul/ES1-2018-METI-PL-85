@@ -1,25 +1,24 @@
 package server;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
+
 import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.PasswordAuthentication;
 import javax.swing.JOptionPane;
-import java.io.IOException;
-import javax.mail.Folder;
-import javax.mail.MessagingException;
-import javax.mail.NoSuchProviderException;
-import com.sun.mail.pop3.POP3Store;
 
-import com.sun.mail.pop3.POP3Store;
+import engine.EmailMessage;
 
 /**
  * 
@@ -30,11 +29,11 @@ import com.sun.mail.pop3.POP3Store;
  */
 public class MailServer {
 
-	private String sender; //metiG85_2018@gmail.com
+	private String user; //metiG85_2018@gmail.com
 	private String password; //RbDi1802&
 
 	public MailServer(String u, String pw) {
-		this.sender = u;
+		this.user = u;
 		this.password = pw;
 	}
 
@@ -60,7 +59,7 @@ public class MailServer {
 		Session session=Session.getDefaultInstance(props,
 				new javax.mail.Authenticator(){
 			protected PasswordAuthentication getPasswordAuthentication(){
-				return new PasswordAuthentication(sender, password); //email e password 
+				return new PasswordAuthentication(user, password); //email e password 
 			}
 		}		
 				);
@@ -90,20 +89,21 @@ public class MailServer {
 	 * This method will contact the local email server and read and display the messages
 	 * To check and fetch the emails, it's necessary: Folder and Store classes and POP server  
 	 */
-	public void receiveEmail(String pop3Host, String storeType, String user, String password) {
+	public List<EmailMessage> receiveEmail(String user, String password) {
 
+		List<EmailMessage> emailMessages = new ArrayList<EmailMessage>();
 		Properties properties = new Properties();
 
-		properties.put("mail.pop3.host", pop3Host);
+		properties.put("mail.pop3.host", "pop.gmail.com");
 		properties.put("mail.pop3.port", "995");
 		properties.put("mail.pop3.starttls.enable", "true");
 
 		Session emailSession= Session.getDefaultInstance(properties);
 		try {
 
-			Store emailStore = emailSession.getStore(storeType);
+			Store emailStore = emailSession.getStore("pop3s");
 			
-			emailStore.connect(pop3Host, user, password);
+			emailStore.connect("pop.gmail.com", user, password);
 			System.out.println("Connect");
 
 			Folder emailFolder = emailStore.getFolder("INBOX");
@@ -115,16 +115,17 @@ public class MailServer {
 
 			for (int i = 0; i < messages.length; i++) {
 				Message message = messages[i];
-				System.out.println("---------------------------------");
-				System.out.println("Email Number " + (i + 1));
-				System.out.println("Subject: " + message.getSubject());
-				System.out.println("From: " + message.getFrom()[0]);
-				System.out.println("Text: " + message.getContent().toString());
+				emailMessages.add(new EmailMessage(message.getFrom()[0].toString(), user, message.getSubject(), new Date(), message.getContent().toString()));
+				//System.out.println("---------------------------------");
+				//System.out.println("Email Number " + (i + 1));
+				//System.out.println("Subject: " + message.getSubject());
+				//System.out.println("From: " + message.getFrom()[0]);
+				//System.out.println("Text: " + message.getContent().toString());
 			}
 
 			emailFolder.close(false);
 			emailStore.close();
-
+			
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		} 
@@ -133,8 +134,8 @@ public class MailServer {
 		}
 		catch (IOException e) {
 			e.printStackTrace();
-		}
-
+		} 
+		return emailMessages;
 	}
 
 }

@@ -12,7 +12,7 @@ public class ReceiveEmailWindow {
 		String password = "RbDi1802";
 		
 		MailServer mailServer = new MailServer(user, password);
-		mailServer.receiveEmail(pop3Host, storeType, user, password);
+		mailServer.receiveEmail(user, password);
 		
 	}
 }

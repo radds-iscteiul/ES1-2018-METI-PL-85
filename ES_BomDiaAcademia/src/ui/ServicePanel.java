@@ -20,6 +20,7 @@ import engine.MyMessage;
 import engine.Service;
 import engine.ServiceType;
 import engine.TwitterService;
+import server.MailServer;
 import server.TwitterServer;
 /**
  * 
@@ -150,7 +151,8 @@ public class ServicePanel extends JPanel{
 					}
 					
 					if(service.getName() == ServiceType.EMAIL) {
-						
+						MailServer emailServer = new MailServer(service.getUser(),service.getPassword());
+						messages.addAll(emailServer.receiveEmail(service.getUser(), service.getPassword()));
 					}
 				}
 				 Controller.getInstance().addAllMessages(messages);
