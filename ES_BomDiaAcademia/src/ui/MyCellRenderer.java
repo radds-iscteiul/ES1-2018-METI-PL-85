@@ -10,7 +10,11 @@ import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 
 import engine.Service;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
     public MyCellRenderer() {
         setOpaque(true);

@@ -21,8 +21,13 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import engine.Service;
+import engine.TwitterService;
 
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class XMLManager {
 	    /**
 	     * 
@@ -65,10 +70,10 @@ public class XMLManager {
 	                    int tamanhoListaFilhos = listaDeFilhosDaPessoa.getLength();
 	                     
 	                    String nome = "";
-	                    String endereco = "";
 	                    String user = "";
 	                    String password = "";
-	                    	                  
+	                    String watch = "";
+	                    	                   
 	                    for (int j = 0; j < tamanhoListaFilhos; j++) {
 	                        	                       
 	                        Node noFilho = listaDeFilhosDaPessoa.item(j);
@@ -81,13 +86,13 @@ public class XMLManager {
 	                                case "nome":
 	                                    nome = elementoFilho.getTextContent();
 	                                    break;
-	                                    
-	                                case "endereco":	                                   
-	                                    endereco = elementoFilho.getTextContent();
-	                                    break;
-	                                    
+	   
 	                                case "utilizador":
 	                                    user = elementoFilho.getTextContent();
+	                                    break;
+	                                   
+	                                case "watch":
+	                                    watch = elementoFilho.getTextContent();
 	                                    break;
 	                                    
 	                                case "password":
@@ -96,7 +101,14 @@ public class XMLManager {
 	                            }
 	                        }                        
 	                    }
-	                    listaServicos.add(new Service(Integer.valueOf(id),nome,endereco,user,password));
+	                    if(nome.equals("Twitter")) {
+	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,watch));
+	                    } else if(nome.equals("Facebook")) {
+	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password));
+	                    } else if(nome.equals("Email")) {
+	                    	 listaServicos.add(new Service(Integer.valueOf(id),nome,user,password));
+	                    }
+	                    
 	                }
 	            }
 	            return listaServicos;
@@ -138,10 +150,6 @@ public class XMLManager {
 	    	nome.appendChild(configXML.createTextNode(s.getName().toString())); 	
 	    	service.appendChild(nome);
 	    	
-	    	Element endereco = configXML.createElement("endereco");
-	    	endereco.appendChild(configXML.createTextNode(s.getEndereco())); 	
-	    	service.appendChild(endereco);
-	    	
 	    	Element utilizador = configXML.createElement("utilizador");
 	    	utilizador.appendChild(configXML.createTextNode(s.getUser())); 	
 	    	service.appendChild(utilizador);
@@ -156,7 +164,7 @@ public class XMLManager {
 	    public static void main(String[] args) {
 	    	
 	    	ArrayList<Service> services = new ArrayList<Service>();
-	    	services.add(new Service(1, "Email", "0.0.0.0", "a@gmail.com", "password"));
+	    	services.add(new Service(1, "Email", "a@gmail.com", "password"));
 			try {
 				new XMLManager().writeXML(services);
 			} catch (TransformerException | ParserConfigurationException e) {

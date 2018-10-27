@@ -1,19 +1,22 @@
 package engine;
 
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class Service {
 	
 	private int id;
 	private ServiceType name;
-	private String endereco;
 	private String user;
 	private String password;
 	
 	private boolean ative = true;
 	
-	public Service(int id, String n, String e, String u, String p) {
+	public Service(int id, String n, String u, String p) {
 		this.id = id;
 		this.name = this.identifyService(n);
-		this.endereco = e;
 		this.user = u;
 		this.password = p;
 	}
@@ -26,17 +29,12 @@ public class Service {
 	}
 	public int getId() {
 		return this.id;
-	}
-	
+	}	
 	public String getUser() {
 		return this.user;
 	}
 	public String getPassword() {
 		return this.password;
-	}
-	
-	public String getEndereco() {
-		return this.endereco;
 	}
 	public boolean isAtive() {
 		return this.ative;
@@ -55,7 +53,7 @@ public class Service {
 	}
 	@Override
 	public String toString() {
-		return this.name+ " ; " + this.endereco;
+		return this.name.toString();
 	}
 
 }

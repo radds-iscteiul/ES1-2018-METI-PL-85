@@ -1,7 +1,11 @@
 package engine;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public abstract class MyMessage {
 
 	private String from;

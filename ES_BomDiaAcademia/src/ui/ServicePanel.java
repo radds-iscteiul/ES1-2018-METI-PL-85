@@ -16,8 +16,16 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import engine.Controller;
+import engine.MyMessage;
 import engine.Service;
-
+import engine.ServiceType;
+import engine.TwitterService;
+import server.TwitterServer;
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class ServicePanel extends JPanel{
 	
 	private MainWindow mainWindow;
@@ -128,9 +136,25 @@ public class ServicePanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				 List<Service> s = Controller.getInstance().getAtiveServices();
 				 System.out.println("Serviços Ativos: ");
+				 List<MyMessage> messages = new ArrayList<MyMessage>();
 				 for (Service service : s) {
-					 System.out.println(service.toString());
+					if(service.getName() == ServiceType.TWITTER) {
+						TwitterService twitterService = (TwitterService) service;
+						TwitterServer ts = new TwitterServer();
+						System.out.println(twitterService.getWatch());
+						messages.addAll(ts.getTweetsFromUser(twitterService.getWatch(), 10));
+					}
+					
+					if(service.getName() == ServiceType.FACEBOOK) {
+						
+					}
+					
+					if(service.getName() == ServiceType.EMAIL) {
+						
+					}
 				}
+				 Controller.getInstance().addAllMessages(messages);
+				 mainWindow.updateMessageListUI();
 				
 			}
 		});

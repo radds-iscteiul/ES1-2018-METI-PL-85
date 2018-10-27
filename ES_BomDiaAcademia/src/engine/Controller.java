@@ -37,7 +37,7 @@ public class Controller{
 	}
 
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @param ArrayList<Service>
 	 * 
 	 * Starts the controller with the list of services obtained from the configuration file
@@ -51,7 +51,7 @@ public class Controller{
 		allMessages.add(new EmailMessage("Rafael","Marta","Declaração", new Date(), "Two week in a virginia jail, for my lover, for my lover"));
 	}
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @param ArrayList<Service>
 	 * Initializes from the ArrayList given by the XMLManager which provides the configuration file data.
 	 */
@@ -61,7 +61,7 @@ public class Controller{
 		}
 	}
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @param ServiceType
 	 * @return Given an hashMap <key> this method will return its value
 	 */
@@ -70,7 +70,7 @@ public class Controller{
 	}
 	
 	/**
-	 *
+	 *@author Rafael Dias
 	 * @return All existing services from the configuration
 	 */
 	public ArrayList<Service> getAllServices() {
@@ -82,7 +82,7 @@ public class Controller{
 		return s;
 	}
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @return All currently ative services
 	 */
 	public List<Service> getAtiveServices(){
@@ -96,7 +96,7 @@ public class Controller{
 	}
 	
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @return main window of the application
 	 */
 	public JFrame getMainWindow() {
@@ -104,7 +104,7 @@ public class Controller{
 	}
 	
 	/**
-	 * 
+	 * @author Rafael Dias
 	 * @param Service
 	 * 
 	 * Toggle service's state (ative/ not ative)
@@ -116,7 +116,17 @@ public class Controller{
 	public List<MyMessage> getAllMessages() {
 		return this.allMessages;
 	}
-	
+	/**
+	 * @Rafael Dias
+	 * @param List<MyMessage> 
+	 * @return true if not problems were found
+	 * 
+	 * This method deletes all messages in the inbox and fullfills it with new messages
+	 */
+	public boolean addAllMessages(List<MyMessage> messages) {
+		this.allMessages.clear();
+		return this.allMessages.addAll(messages);		
+	}
 	/**
 	 * @author Ines Duarte
 	 * @param MyMessage

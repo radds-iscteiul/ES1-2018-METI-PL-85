@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
+import java.awt.event.MouseListener;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -18,19 +18,22 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import engine.Controller;
-import engine.EmailMessage;
 import engine.FilterType;
 import engine.MyMessage;
 import engine.Service;
 import engine.ServiceType;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class InformationPanel extends JPanel{
 	
 	private MainWindow mainWindow;
 	
 	private JList<MyMessage> displayedMessages;
 	private JButton composeMessage;
-	private JComboBox filters;
+	private JComboBox<FilterType> filters;
 	private JTextField keyword;
 	
 	public InformationPanel(MainWindow mw) {
@@ -88,48 +91,20 @@ public class InformationPanel extends JPanel{
 		        JList list = (JList)evt.getSource();
 		        if (evt.getClickCount() == 2) {
 		            int index = list.locationToIndex(evt.getPoint());
-		            EmailMessage selectedMessage = (EmailMessage)list.getSelectedValue();
+		            MyMessage selectedMessage = (MyMessage)list.getSelectedValue();
 		            if(selectedMessage != null) {
 		            	new ReadMessageWindow(selectedMessage);
 		            }
-		        } else if (evt.getClickCount() == 3) {
-
-		            // Triple-click detected
-		            int index = list.locationToIndex(evt.getPoint());
 		        }
 		    }
 		});
 	
+		
 		filters.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				FilterType type = (FilterType)filters.getSelectedItem();
-				System.out.println(type.getFilterValue());
-				
-				if(type.getFilterValue().equals("Keyword")) {
-					
-					keyword.setEnabled(true);
-					keyword.setEditable(true);
-					keyword.setText("insert keyword");
-					
-				} else {
-					keyword.setEnabled(false);
-					keyword.setEditable(false);
-					keyword.setText("");
-				
-					if(type.getFilterValue().equals("None")){									
-						List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
-						displayedMessages.removeAll();
-						DefaultListModel<MyMessage> newModel = new DefaultListModel<MyMessage>();
-						for (MyMessage m : allMessages) {
-							newModel.addElement(m);
-						}
-						displayedMessages.setModel(newModel);
-					} 
-				}
-				
+			public void actionPerformed(ActionEvent e) {				
+				InformationPanel.this.updateMessageUI();			
 			}
 		});
 		keyword.addActionListener(new ActionListener() {
@@ -148,6 +123,66 @@ public class InformationPanel extends JPanel{
 				
 			}
 		});
+		keyword.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				if(keyword.isEditable() && keyword.getText().equals("insert keyword")) {
+					keyword.setText("");
+				}
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				if(keyword.isEditable() && keyword.getText().isEmpty()) {
+					keyword.setText("insert keyword");
+				}
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
+	public void updateMessageUI() {
+		
+		FilterType type = (FilterType)filters.getSelectedItem();
+		
+		if(type.getFilterValue().equals("Keyword")) {	
+			keyword.setEnabled(true);
+			keyword.setEditable(true);
+		} else {
+			keyword.setEnabled(false);
+			keyword.setEditable(false);
+			keyword.setText("");
+		
+			if(type.getFilterValue().equals("None")){									
+				List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
+				displayedMessages.removeAll();
+				DefaultListModel<MyMessage> newModel = new DefaultListModel<MyMessage>();
+				for (MyMessage m : allMessages) {
+					newModel.addElement(m);
+				}
+				displayedMessages.setModel(newModel);
+			} 
+		}
+		this.displayedMessages.updateUI();
+	}
 }

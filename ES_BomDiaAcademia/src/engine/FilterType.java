@@ -1,5 +1,9 @@
 package engine;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public enum FilterType {
 
 	KEYWORD,DATE_CRESCENT,DATE_DECRESCENT,NONE;

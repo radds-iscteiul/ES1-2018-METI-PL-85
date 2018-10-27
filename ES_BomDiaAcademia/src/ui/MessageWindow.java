@@ -10,7 +10,11 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
 import utils.SpringUtilities;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class MessageWindow extends JFrame{
 	
 	protected JLabel fromLabel = new JLabel("From: ",JLabel.TRAILING);
