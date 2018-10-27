@@ -6,6 +6,8 @@ import java.util.Scanner;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 import com.restfb.types.Group;
 import com.restfb.types.Page;
 import com.restfb.types.Post;
@@ -15,7 +17,7 @@ public class FBServer {
 
 	private static String accessToken ="EAACfZAWzZAoH4BAF5JhYilwqvh8IbpZAvHy1K7t7dzKbA436qjEFu7XmLuACdRquT5kZCa1j1L3zlhVd2H33FRJshCZA28z0h3TB4d5eMQ8A1vMnh6TtxikB3oe5rXS8SyUdcuUoZC4qnT7n95kjAP9D1pybCluUMZD";
 	private static FacebookClient fbClient = new DefaultFacebookClient(accessToken);
-	
+
 	public static void getUserGroups(){
 		Connection<Group> groups = fbClient.fetchConnection("me/groups",Group.class);
 		int counter =0;
@@ -28,7 +30,7 @@ public class FBServer {
 		}
 		System.out.println("Number of Results "+counter);
 	}
-	
+
 
 	public static void getLikedPages(){
 		Connection<Page> result = fbClient.fetchConnection("me/likes",Page.class);
@@ -42,8 +44,8 @@ public class FBServer {
 		}
 		System.out.println("Number of Results "+counter);
 	}
-	
-	
+
+
 	public static void getAdminPages(){
 		Connection<Page> result = fbClient.fetchConnection("me/accounts",Page.class);
 		int counter=0;
@@ -56,8 +58,8 @@ public class FBServer {
 		}
 		System.out.println("Number of Results "+counter);
 	}
-	
-	
+
+
 	public static void getUsersAdminGroups(){
 		Connection<Group> groups = fbClient.fetchConnection("me/admined_groups",Group.class);
 		//{user-id}/admined_groups is deprecated for versions v2.8 and higher
@@ -69,7 +71,7 @@ public class FBServer {
 			}
 		}
 	}
-	
+
 	public static void getGroupMembers(){
 		Connection<Group> groups = fbClient.fetchConnection("me/groups",Group.class);
 		Scanner input = new Scanner(System.in);
@@ -90,21 +92,21 @@ public class FBServer {
 			}
 		}
 	}
-	
-	
+
+
 	public static void getTimelinePosts() {
-	Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
-	int counter=0;
-	for(List<Post> page : result){	
-		for(Post aPost : page){
-			System.out.println(aPost.getMessage());
-			System.out.println("fb.com/"+aPost.getId());
-			counter++;
+		Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
+		int counter=0;
+		for(List<Post> page : result){	
+			for(Post aPost : page){
+				System.out.println(aPost.getMessage());
+				System.out.println("fb.com/"+aPost.getId());
+				counter++;
+			}
 		}
+		System.out.println("Number of Results "+counter);
 	}
-	System.out.println("Number of Results "+counter);
-}
-	
+
 	public static void getHomePosts(){
 		Connection<Post> result = fbClient.fetchConnection("me/home",Post.class);
 		int counter=0;
@@ -117,8 +119,8 @@ public class FBServer {
 		}
 		System.out.println("Number of Results "+counter);
 	}
-	
-	
+
+
 	public static void getPostsFromGroup(){
 		Connection<Group> groups = fbClient.fetchConnection("me/groups",Group.class);
 		Scanner input = new Scanner(System.in);
@@ -141,7 +143,7 @@ public class FBServer {
 			}
 		}
 	}
-	
+
 	public static void getPostsFromPage(){
 		Page page = fbClient.fetchObject("ISCTEIUL", Page.class);
 		Connection<Post> postFeed = fbClient.fetchConnection(page.getId()+"/feed", Post.class);
@@ -152,9 +154,38 @@ public class FBServer {
 				System.out.println("fb.com/"+aPost.getId());
 			}
 		}
-	
+
 	}
-	
+
+	public static void  postStatusToTimeline(){
+		Scanner input = new Scanner(System.in);
+		System.out.println("What's n your mind? ");
+		String ans = input.nextLine();
+		FacebookType response = fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", ans));
+		System.out.println("fb.com/"+response.getId());
+	}
+
+
+	public static void postStatusToFacebookGroup(){
+		Scanner input = new Scanner(System.in);
+		Connection<Group> result = fbClient.fetchConnection("me/groups", Group.class);
+		for(List<Group> GroupPage :result){
+			for(Group aGroup :GroupPage){
+				System.out.println("Do you want to post in "+aGroup.getName()+" group? ");
+				String ans = input.nextLine();
+				if(ans.equalsIgnoreCase("yes")){
+					System.out.println("What do you want to post? ");
+					String msg = input.nextLine();
+					FacebookType response = fbClient.publish(aGroup.getId()+"/feed",  FacebookType.class,
+							Parameter.with("message", msg)	
+							);
+					System.out.println("fb.com/"+response.getId());
+				}
+			}
+		}
+
+	}
+
 	public static void main(String[] args) {
 		User me = fbClient.fetchObject("me", User.class);
 		System.out.println(me.getName());
@@ -166,22 +197,28 @@ public class FBServer {
 		getAdminPages();
 		System.out.println("-----------------------TIMELINE POSTS-----------------------");
 		getTimelinePosts();
-		
-//		To use 'Page Public Content Access', your use of this endpoint must be reviewed and approved by Facebook
-//		System.out.println("-----------------------POSTS FROM PAGES-----------------------");
-//		getPostsFromPage();
-		
-//		admined_groups is deprecated for versions v2.8 and higher
-//		System.out.println("-----------------------USERS ADMIN GROUPS-----------------------");
-//		getUsersAdminGroups();
-//		System.out.println("-----------------------GROUP MEMBERS-----------------------");
-//		getGroupMembers();
-//		System.out.println("-----------------------HOME POSTS-----------------------");
-//		getHomePosts();
-//		System.out.println("-----------------------POSTS FROM GROUP-----------------------");
-//		getPostsFromGroup();
+
+		//		To use 'Page Public Content Access', your use of this endpoint must be reviewed and approved by Facebook
+		//		System.out.println("-----------------------POSTS FROM PAGES-----------------------");
+		//		getPostsFromPage();
+
+		//		admined_groups is deprecated for versions v2.8 and higher
+		//		System.out.println("-----------------------USERS ADMIN GROUPS-----------------------");
+		//		getUsersAdminGroups();
+		//		System.out.println("-----------------------GROUP MEMBERS-----------------------");
+		//		getGroupMembers();
+		//		System.out.println("-----------------------HOME POSTS-----------------------");
+		//		getHomePosts();
+		//		System.out.println("-----------------------POSTS FROM GROUP-----------------------");
+		//		getPostsFromGroup();
+
+		//		 Requires either publish_to_groups permission and app being installed in the group, or manage_pages and publish_pages as an admin with sufficient administrative permission
+		//		System.out.println("-----------------------POST STATUS TO TIMELINE-----------------------");
+		//		postStatusToTimeline();
+
+	System.out.println("-----------------------POST STATUS TO GROUP-----------------------");
+		postStatusToFacebookGroup();
 	}
-	
+
 }
-	
-	
+
