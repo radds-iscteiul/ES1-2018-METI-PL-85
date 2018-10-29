@@ -33,7 +33,6 @@ public class MessageWindow extends JFrame{
 		this.setLayout(new BorderLayout());
 		this.startComponents();
 		this.start();
-
 	}
 
 	private void startComponents() {
