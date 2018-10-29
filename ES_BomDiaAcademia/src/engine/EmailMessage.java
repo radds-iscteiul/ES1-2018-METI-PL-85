@@ -8,7 +8,6 @@ public class EmailMessage extends MyMessage {
 	
 	private String to;
 	private String header;
-		
 	
 	public EmailMessage(String from, String to, String header, Date time, String message) {
 		super(from, time, message);

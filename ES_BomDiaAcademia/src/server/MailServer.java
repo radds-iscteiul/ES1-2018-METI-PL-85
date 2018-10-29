@@ -18,7 +18,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.swing.JOptionPane;
 
+import com.restfb.types.Post;
+
 import engine.EmailMessage;
+import engine.ServiceType;
 
 /**
  * 
@@ -31,6 +34,7 @@ public class MailServer {
 
 	private String user; //metiG85_2018@gmail.com
 	private String password; //RbDi1802&
+	private String host="GMAIL";
 
 	public MailServer(String u, String pw) {
 		this.user = u;
@@ -49,12 +53,25 @@ public class MailServer {
 	 */
 	public void sendEmail(String from, String to, String subject, String body) {
 
+		EmailMessage email = new EmailMessage(from, to, subject, new Date(System.currentTimeMillis()), body);
 		Properties props = new Properties();
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.socketFactory.port", "465"); //port para SSL configuraçao standart
-		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.port", "465");
+
+		if(host.equals("GMAIL")){
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465"); //port para SSL configuraçao standart
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+		}
+
+		if(host.equals("OUTLOOK")){
+			props.put("mail.smtp.host", "smtp.office365.com");
+			props.put("mail.smtp.socketFactory.port", "587");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "587");
+		}
+
 
 		Session session=Session.getDefaultInstance(props,
 				new javax.mail.Authenticator(){
@@ -94,7 +111,14 @@ public class MailServer {
 		List<EmailMessage> emailMessages = new ArrayList<EmailMessage>();
 		Properties properties = new Properties();
 
-		properties.put("mail.pop3.host", "pop.gmail.com");
+		if(host.equals("GMAIL")){
+			properties.put("mail.pop3.host", "pop.gmail.com"); 
+		}
+
+		if(host.equals("OUTLOOK")){
+			properties.put("mail.pop3.host","outlook.office365.com");
+		}
+
 		properties.put("mail.pop3.port", "995");
 		properties.put("mail.pop3.starttls.enable", "true");
 
@@ -102,7 +126,7 @@ public class MailServer {
 		try {
 
 			Store emailStore = emailSession.getStore("pop3s");
-			
+
 			emailStore.connect("pop.gmail.com", user, password);
 			System.out.println("Connect");
 
@@ -122,10 +146,8 @@ public class MailServer {
 				//System.out.println("From: " + message.getFrom()[0]);
 				//System.out.println("Text: " + message.getContent().toString());
 			}
-
 			emailFolder.close(false);
 			emailStore.close();
-			
 		} catch (NoSuchProviderException e) {
 			e.printStackTrace();
 		} 

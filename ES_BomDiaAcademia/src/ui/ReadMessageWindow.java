@@ -4,6 +4,7 @@ import java.util.Date;
 
 import engine.EmailMessage;
 import engine.MyMessage;
+import engine.ServiceType;
 
 public class ReadMessageWindow extends MessageWindow{
 

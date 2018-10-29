@@ -3,7 +3,7 @@ package engine;
 public enum ServiceType {
 
 	EMAIL,FACEBOOK,TWITTER;
-	
+
 	public String toString() {
 		switch(this) {
 		case EMAIL:
@@ -16,4 +16,5 @@ public enum ServiceType {
 			return "ERROR";
 		}
 	}
+	
 }

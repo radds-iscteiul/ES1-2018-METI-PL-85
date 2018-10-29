@@ -5,11 +5,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.JFrame;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-
 import config.XMLManager;
 import ui.MainWindow;
 
@@ -22,21 +20,21 @@ import ui.MainWindow;
  *	Uses Singleton pattern
  */
 public class Controller{
-	
+
 	private static Controller INSTANCE = null;
-	
+
 	private JFrame mainWindow;
 	private Map<ServiceType,Service> servicos;
 	private List<MyMessage> allMessages;
-	
+
 	private Controller() {
 	}
-	
+
 	public static Controller getInstance( ) {
-	      if (INSTANCE == null) {
-	    	  INSTANCE = new Controller();
-	      }
-	      return INSTANCE;
+		if (INSTANCE == null) {
+			INSTANCE = new Controller();
+		}
+		return INSTANCE;
 	}
 
 	/**
@@ -50,8 +48,8 @@ public class Controller{
 		this.readConfigurations(s);	
 		mainWindow = new MainWindow();
 		allMessages = new ArrayList<MyMessage>();
-		allMessages.add(new EmailMessage("Rafael", "Inês","Aprsentação",new Date(), "Olá, sou o Rafael, tudo bem?"));
-		allMessages.add(new EmailMessage("Rafael","Marta","Declaração", new Date(), "Two week in a virginia jail, for my lover, for my lover"));
+		allMessages.add(new EmailMessage("Rafael", "Inï¿½s","Aprsentaï¿½ï¿½o",new Date(), "Olï¿½, sou o Rafael, tudo bem?"));
+		allMessages.add(new EmailMessage("Rafael","Marta","Declaraï¿½ï¿½o", new Date(), "Two week in a virginia jail, for my lover, for my lover"));
 	}
 	/**
 	 * @author Rafael Dias
@@ -71,14 +69,14 @@ public class Controller{
 	public Service getService(ServiceType service) {		
 		return this.servicos.get(service);
 	}
-	
+
 	/**
 	 *@author Rafael Dias
 	 * @return All existing services from the configuration
 	 */
 	public ArrayList<Service> getAllServices() {
 		ArrayList<Service> s = new ArrayList<Service>();
-		
+
 		for(Service service : this.servicos.values()) {
 			s.add(service);
 		}
@@ -97,7 +95,7 @@ public class Controller{
 		}
 		return s;
 	}
-	
+
 	/**
 	 * @author Rafael Dias
 	 * @return main window of the application
@@ -105,7 +103,7 @@ public class Controller{
 	public JFrame getMainWindow() {
 		return mainWindow;
 	}
-	
+
 	/**
 	 * @author Rafael Dias
 	 * @param Service
@@ -115,7 +113,7 @@ public class Controller{
 	public void toogleServiceState(Service s) {
 		s.toogleAtive();
 	}
-	
+
 	public List<MyMessage> getAllMessages() {
 		return this.allMessages;
 	}
@@ -138,7 +136,7 @@ public class Controller{
 	 */
 	public boolean wordFilter (MyMessage message, String palavra){
 		String m = message.getMessage();
-		
+
 		for(int i = 0; ( i < m.length()-palavra.length()); i++) {
 			String aux = m.substring(i, i+palavra.length());
 			if( palavra.equals(aux)) {
@@ -149,8 +147,8 @@ public class Controller{
 		}
 		return false;
 	}
-	
-	
+
+
 	public void saveServicesToXML() {
 		XMLManager xmlM = new XMLManager();
 		try {
@@ -159,6 +157,22 @@ public class Controller{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+/**
+ * 
+ * @param list
+ * @param userName
+ * @return only the lists that have the requested User as the source or as the sender. 
+ */
+	public List<MyMessage> UserFilter(List<MyMessage> list, String userName){
+		List<MyMessage> found = new ArrayList<MyMessage>();
+		for(MyMessage aMessage : list){
+			if(aMessage.getFrom().equals(userName) /* || aMessage.get REMETENTE */ ){
+				found.add(aMessage);
+			}
+		}
+		return found;
 	}
 	
 
