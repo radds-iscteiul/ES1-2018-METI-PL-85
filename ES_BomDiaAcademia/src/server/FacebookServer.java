@@ -28,11 +28,7 @@ public class FacebookServer {
 	 */
 	public List<FacebookMessage>  getTimelinePosts() {
 		List<FacebookMessage> fb = new ArrayList<FacebookMessage>();
-		Scanner input = new Scanner(System.in);
-		System.out.println("Do you want to get timeline posts (yes/no)");
-		String ans = input.nextLine();
 		int counter=0;
-		if(ans.equalsIgnoreCase("yes")){
 			Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
 
 			for(List<Post> page : result){	
@@ -45,7 +41,6 @@ public class FacebookServer {
 					counter++;
 				}
 			}
-		}
 		System.out.println("Number of Results "+counter);
 		return fb;
 	}
@@ -148,8 +143,8 @@ public class FacebookServer {
 
 		FacebookServer f= new FacebookServer();
 		f.getTimelinePosts();
-		f.getPostsFrom("group", "ES");
-		f.postStatusToFacebook("group", "ES", "Testar Facebook java API");
+//		f.getPostsFrom("group", "ES");
+//		f.postStatusToFacebook("group", "ES", "Testar Facebook java API");
 
 	}
 
