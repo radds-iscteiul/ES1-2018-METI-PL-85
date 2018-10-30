@@ -1,6 +1,9 @@
 package engine;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -159,12 +162,12 @@ public class Controller{
 		}
 	}
 
-/**
- * 
- * @param list
- * @param userName
- * @return only the lists that have the requested User as the source or as the sender. 
- */
+	/**
+	 * 
+	 * @param list
+	 * @param userName
+	 * @return only the lists that have the requested User as the source or as the sender. 
+	 */
 	public List<MyMessage> UserFilter(List<MyMessage> list, String userName){
 		List<MyMessage> found = new ArrayList<MyMessage>();
 		for(MyMessage aMessage : list){
@@ -174,6 +177,72 @@ public class Controller{
 		}
 		return found;
 	}
+
+
 	
+	/**
+	 * 
+	 * @param message
+	 * @param startDate
+	 * @param endDate
+	 * @return true if the date of the message is within a specified date range
+	 */
+	public boolean CompareDate (MyMessage message, Date startDate, Date endDate){
+		Date atual = message.getTime();
+		if(atual.compareTo(startDate)>=0 && atual.compareTo(endDate)<=0){
+			
+			System.out.println("Data encontra-se dentro do intervalo");
+			return true;
+		}else{
+			System.out.println("Não se encontra dentro do intervalo");
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @param porFiltrar
+	 * @param startDate
+	 * @param endDate
+	 * @return a list of messages filtered by the specified date range
+	 * @throws ParseException
+	 */
+	
+	public List<MyMessage>DateFilter(List<MyMessage> porFiltrar, Date startDate, Date endDate) throws ParseException{
+		List<MyMessage> filtrada = new ArrayList<MyMessage>();
+		for (MyMessage myMessage : porFiltrar) {
+			if(CompareDate(myMessage, startDate, endDate)==true){
+				filtrada.add(myMessage);
+			}
+		}
+		return filtrada;
+	}
+
+
+	/**
+	 * 
+	 * @param list
+	 * @return sorts a list of messages in ascending order of dates
+	 */
+	
+	public List<MyMessage> OrderMessageByDateC (List<MyMessage> list){
+		Collections.sort(list, new MyMessageComparator());
+		return list;
+	}
+
+	/**
+	 * 
+	 * @param list
+	 * @return sorts a list of messages in descending order of dates
+	 */
+	
+	public List<MyMessage> OrderMessageByDateD (List<MyMessage> list){
+		List<MyMessage> invert = OrderMessageByDateC(list);
+		Collections.reverse(invert);
+		return invert;
+	}
+
+
 
 }

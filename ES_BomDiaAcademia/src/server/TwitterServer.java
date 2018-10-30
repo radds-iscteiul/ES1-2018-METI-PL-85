@@ -3,7 +3,7 @@ package server;
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.Tweet;
+import engine.TwitterMessage;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -27,11 +27,11 @@ public class TwitterServer {
 
 	}
 
-	public List<Tweet> getTweetsFromUser( String user, int numberOfTweets) {
+	public List<TwitterMessage> getTweetsFromUser( String user, int numberOfTweets) {
 		Paging p = new Paging();
 		p.setCount(numberOfTweets);
 		List<Status> statuses;
-		List<Tweet> tweets = new ArrayList<Tweet>();
+		List<TwitterMessage> tweets = new ArrayList<TwitterMessage>();
 		try {
 			statuses = client.getUserTimeline(user,p);
 			//System.out.println("------------------------\n Showing home timeline \n------------------------");
@@ -40,7 +40,7 @@ public class TwitterServer {
 			for (Status status : statuses) {
 				if (status.getUser().getName() != null /*&& status.getText().contains("")*/) {
 					//System.out.println(status.getUser().getName() + ":" + status.getText());
-					tweets.add(new Tweet(status.getUser().getName(),status.getUser().getCreatedAt(),status.getText()));
+					tweets.add(new TwitterMessage(status.getUser().getName(),status.getUser().getCreatedAt(),status.getText()));
 					//counter++;
 				}
 				//counterTotal++;
@@ -54,7 +54,7 @@ public class TwitterServer {
 
 	
 	public void tweetar () throws TwitterException{
-		String message = "felicitem a ines :) ";
+		String message = "O Gouveia vai ver isto a funcionar :) ";
 		try {
 
 			try {
