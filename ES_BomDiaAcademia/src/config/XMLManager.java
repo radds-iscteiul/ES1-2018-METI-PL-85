@@ -21,6 +21,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import engine.Service;
+import engine.ServiceType;
 import engine.TwitterService;
 
 /**
@@ -170,7 +171,7 @@ public class XMLManager {
 	    	id.setValue(String.valueOf(s.getId()));
 	    	service.setAttributeNode(id);
 	    
-	    	
+	   
 	    	Element nome = configXML.createElement("nome");
 	    	nome.appendChild(configXML.createTextNode(s.getName().toString())); 	
 	    	service.appendChild(nome);
@@ -182,6 +183,29 @@ public class XMLManager {
 	    	Element password = configXML.createElement("password");
 	    	password.appendChild(configXML.createTextNode(s.getPassword())); 	
 	    	service.appendChild(password);
+	    	
+	    	Element ative = configXML.createElement("ative");
+	    	ative.appendChild(configXML.createTextNode(Boolean.toString(s.isAtive()))); 	
+	    	service.appendChild(ative);
+	    	
+	    	if(s.getName() == ServiceType.TWITTER) {
+	    		TwitterService twitterService = (TwitterService) s;
+	    		Element key = configXML.createElement("key");
+		    	key.appendChild(configXML.createTextNode(twitterService.getKey())); 	
+		    	service.appendChild(key);
+		    	
+		    	Element secret = configXML.createElement("secret");
+		    	secret.appendChild(configXML.createTextNode(twitterService.getSecret())); 	
+		    	service.appendChild(secret);
+		    	
+		    	Element token = configXML.createElement("token");
+		    	token.appendChild(configXML.createTextNode(twitterService.getToken())); 	
+		    	service.appendChild(token);
+		    	
+		    	Element tokenSecret = configXML.createElement("tokenSecret");
+		    	tokenSecret.appendChild(configXML.createTextNode(twitterService.getTokenSecret())); 	
+		    	service.appendChild(tokenSecret);
+	    	}
 	    	
 	    	return service;
 	    }
