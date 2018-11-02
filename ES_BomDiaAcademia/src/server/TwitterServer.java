@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import engine.TwitterMessage;
+import engine.TwitterService;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -15,13 +16,13 @@ public class TwitterServer {
 
 	Twitter client;
 
-	public TwitterServer() {
+	public TwitterServer(TwitterService twitterService) {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey("UOUWNb7oxNSvIuH21RnEpn7UW")
-		.setOAuthConsumerSecret("XHVlIQFiAnSZnJXuZIJQ0iPE4yBVkdlhcTnMcvp5m4Bhzhh6BQ")
-		.setOAuthAccessToken("1055189230949986308-2HDQugmJqhyGcuujnn3DiBD99WdveS")
-		.setOAuthAccessTokenSecret("4RJNByPrUNCMEOgXw0kfQ97jxpbEDiE1K2zZFZ9Mirv5w");
+		.setOAuthConsumerKey(twitterService.getKey())
+		.setOAuthConsumerSecret(twitterService.getSecret())
+		.setOAuthAccessToken(twitterService.getToken())
+		.setOAuthAccessTokenSecret(twitterService.getTokenSecret());
 		TwitterFactory tf = new TwitterFactory(cb.build());
 		this.client = tf.getInstance();
 
@@ -80,15 +81,4 @@ public class TwitterServer {
 		}
 	}
 
-
-	
-
-	public static void main(String[] args) throws TwitterException {
-		TwitterServer tw = new TwitterServer();
-	
-//		List<Tweet> lista = tw.getTweetsFromUser("G85Ti", 10);
-//		System.out.println(lista);
-		
-		tw.tweetar();
-	}
 }

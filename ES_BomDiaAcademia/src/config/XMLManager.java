@@ -73,6 +73,10 @@ public class XMLManager {
 	                    String user = "";
 	                    String password = "";
 	                    String watch = "";
+	                    String key = "";
+	                    String secret = "";
+	                    String token = "";
+	                    String tokenSecret = "";
 	                    boolean ative = false;
 	                    	                   
 	                    for (int j = 0; j < tamanhoListaFilhos; j++) {
@@ -101,11 +105,29 @@ public class XMLManager {
 	                                    break;
 	                                case "ative":
 	                                	ative = Boolean.valueOf(elementoFilho.getTextContent());
+	                                	break;
+	                                	
+	                                case "key":
+	                                	key = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "secret":
+	                                	secret = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "token":
+	                                	token = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "tokensecret":
+	                                	tokenSecret = elementoFilho.getTextContent();
+	                                	break;
+	                                	
 	                            }
 	                        }                        
 	                    }
 	                    if(nome.equals("Twitter")) {
-	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch));
+	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch,key,secret,token,tokenSecret));
 	                    } else if(nome.equals("Facebook")) {
 	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
 	                    } else if(nome.equals("Email")) {
