@@ -168,11 +168,17 @@ public class Controller{
 	 * @param userName
 	 * @return only the lists that have the requested User as the source or as the sender. 
 	 */
-	public List<MyMessage> UserFilter(List<MyMessage> list, String userName){
+	public List<MyMessage> userFilter(List<MyMessage> list, String userName){
 		List<MyMessage> found = new ArrayList<MyMessage>();
 		for(MyMessage aMessage : list){
-			if(aMessage.getFrom().equals(userName) /* || aMessage.get REMETENTE */ ){
-				found.add(aMessage);
+			if(aMessage instanceof FacebookMessage) {
+				FacebookMessage fbMess = (FacebookMessage)aMessage;
+				//Filtrar pelo que quiseres no caso especifico de uma mensagem do facebook
+				found.add(fbMess);
+			} else {
+				if(aMessage.getFrom().equals(userName) /* || aMessage.get REMETENTE */ ){
+					found.add(aMessage);			
+				}
 			}
 		}
 		return found;
@@ -209,7 +215,7 @@ public class Controller{
 	 * @throws ParseException
 	 */
 	
-	public List<MyMessage>DateFilter(List<MyMessage> porFiltrar, Date startDate, Date endDate) throws ParseException{
+	public List<MyMessage> dateFilter(List<MyMessage> porFiltrar, Date startDate, Date endDate) throws ParseException{
 		List<MyMessage> filtrada = new ArrayList<MyMessage>();
 		for (MyMessage myMessage : porFiltrar) {
 			if(CompareDate(myMessage, startDate, endDate)==true){
@@ -226,7 +232,7 @@ public class Controller{
 	 * @return sorts a list of messages in ascending order of dates
 	 */
 	
-	public List<MyMessage> OrderMessageByDateC (List<MyMessage> list){
+	public List<MyMessage> orderMessageByDateC (List<MyMessage> list){
 		Collections.sort(list, new MyMessageComparator());
 		return list;
 	}
@@ -237,12 +243,11 @@ public class Controller{
 	 * @return sorts a list of messages in descending order of dates
 	 */
 	
-	public List<MyMessage> OrderMessageByDateD (List<MyMessage> list){
-		List<MyMessage> invert = OrderMessageByDateC(list);
+	public List<MyMessage> orderMessageByDateD (List<MyMessage> list){
+		List<MyMessage> invert = orderMessageByDateC(list);
 		Collections.reverse(invert);
 		return invert;
 	}
-
 
 
 }

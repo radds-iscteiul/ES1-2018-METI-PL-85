@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import engine.Controller;
 import engine.EmailMessage;
+import engine.FacebookMessage;
 import engine.MyMessage;
 
 public class ControllerTest {
@@ -28,15 +29,15 @@ public class ControllerTest {
 	@Test
 	public void userFilterTest(){
 		List<MyMessage> list = new ArrayList<MyMessage>();
-		list.add(new EmailMessage("Rafael", "Barbara", "Test2", new Date(), "Search for a USER in this message"));
+		list.add(new FacebookMessage("Rafael", new Date(), "Search for a USER in this message"));
 		String username = "Rafael";
 
-		assertEquals(Controller.getInstance().UserFilter(list, username), list);
+		assertEquals(Controller.getInstance().userFilter(list, username), list);
 		
 	}
 	
 	@Test
-	public void DateFilterTest() throws ParseException{
+	public void dateFilterTest() throws ParseException{
 		List<MyMessage> list = new ArrayList<MyMessage>();
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
@@ -53,7 +54,7 @@ public class ControllerTest {
 		MyMessage msg1 = new EmailMessage("Inês", "Bárbara", "Datas", dMessage, "vamos validar esta data");		
 		list.add(msg1);
 		
-		assertEquals(Controller.getInstance().DateFilter(list, d1, d2), list);
+		assertEquals(Controller.getInstance().dateFilter(list, d1, d2), list);
 		
 	}
 	
