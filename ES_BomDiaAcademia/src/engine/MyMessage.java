@@ -12,6 +12,7 @@ public abstract class MyMessage {
 	private Date time;
 	private String message;
 	
+		
 	public MyMessage(String from, Date time, String message) {
 		this.from= from;
 		this.time=time;
@@ -22,7 +23,8 @@ public abstract class MyMessage {
 		return from;
 	}
 	
-	public Date getTime() {
+		
+	public Date getTime(){
 		return time;
 	}
 
@@ -35,4 +37,5 @@ public abstract class MyMessage {
 		// TODO Auto-generated method stub
 		return super.toString();
 	}
+	
 }

@@ -6,7 +6,7 @@ package engine;
  */
 public enum FilterType {
 
-	KEYWORD,DATE_CRESCENT,DATE_DECRESCENT,NONE;
+	KEYWORD,DATE_CRESCENT,DATE_DECRESCENT,NONE,USER;
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -21,9 +21,12 @@ public enum FilterType {
 			return "Older";
 		case DATE_DECRESCENT:
 			return "Recent";
+		case USER:
+			return"User";
 		default:
 			return "None";
 		}
-			
 	}
+	
+	
 }

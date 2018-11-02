@@ -11,6 +11,7 @@ public class ReceiveEmailWindow {
 		String user = "metiG85.2018@gmail.com";
 		String password = "RbDi1802";
 		
+		
 		MailServer mailServer = new MailServer(user, password);
 		mailServer.receiveEmail(user, password);
 		

@@ -2,9 +2,9 @@ package engine;
 
 import java.util.Date;
 
-public class Tweet extends MyMessage{
+public class TwitterMessage extends MyMessage{
 
-	public Tweet(String from, Date time, String message) {
+	public TwitterMessage(String from, Date time, String message) {
 		super(from, time, message);
 	}
 

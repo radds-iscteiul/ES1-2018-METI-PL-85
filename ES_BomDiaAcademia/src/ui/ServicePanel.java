@@ -17,10 +17,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import engine.Controller;
+import engine.FacebookService;
 import engine.MyMessage;
 import engine.Service;
 import engine.ServiceType;
 import engine.TwitterService;
+import server.FacebookServer;
 import server.MailServer;
 import server.TwitterServer;
 /**
@@ -140,7 +142,7 @@ public class ServicePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 List<Service> s = Controller.getInstance().getAtiveServices();
-				 System.out.println("Serviços Ativos: ");
+				 System.out.println("ServiÃ§os Ativos: ");
 				 List<MyMessage> messages = new ArrayList<MyMessage>();
 				 for (Service service : s) {
 					if(service.getName() == ServiceType.TWITTER) {
@@ -151,7 +153,9 @@ public class ServicePanel extends JPanel{
 					}
 					
 					if(service.getName() == ServiceType.FACEBOOK) {
-						
+						FacebookService fbService = (FacebookService) service;
+						FacebookServer fs = new FacebookServer();
+						messages.addAll(fs.getTimelinePosts());
 					}
 					
 					if(service.getName() == ServiceType.EMAIL) {
