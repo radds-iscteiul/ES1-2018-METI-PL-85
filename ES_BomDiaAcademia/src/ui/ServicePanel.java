@@ -147,7 +147,7 @@ public class ServicePanel extends JPanel{
 				 for (Service service : s) {
 					if(service.getName() == ServiceType.TWITTER) {
 						TwitterService twitterService = (TwitterService) service;
-						TwitterServer ts = new TwitterServer();
+						TwitterServer ts = new TwitterServer(twitterService);
 						System.out.println(twitterService.getWatch());
 						messages.addAll(ts.getTweetsFromUser(twitterService.getWatch(), 10));
 					}

@@ -21,6 +21,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import engine.Service;
+import engine.ServiceType;
 import engine.TwitterService;
 
 /**
@@ -73,6 +74,10 @@ public class XMLManager {
 	                    String user = "";
 	                    String password = "";
 	                    String watch = "";
+	                    String key = "";
+	                    String secret = "";
+	                    String token = "";
+	                    String tokenSecret = "";
 	                    boolean ative = false;
 	                    	                   
 	                    for (int j = 0; j < tamanhoListaFilhos; j++) {
@@ -101,11 +106,29 @@ public class XMLManager {
 	                                    break;
 	                                case "ative":
 	                                	ative = Boolean.valueOf(elementoFilho.getTextContent());
+	                                	break;
+	                                	
+	                                case "key":
+	                                	key = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "secret":
+	                                	secret = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "token":
+	                                	token = elementoFilho.getTextContent();
+	                                	break;
+	                                	
+	                                case "tokensecret":
+	                                	tokenSecret = elementoFilho.getTextContent();
+	                                	break;
+	                                	
 	                            }
 	                        }                        
 	                    }
 	                    if(nome.equals("Twitter")) {
-	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch));
+	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch,key,secret,token,tokenSecret));
 	                    } else if(nome.equals("Facebook")) {
 	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
 	                    } else if(nome.equals("Email")) {
@@ -148,7 +171,7 @@ public class XMLManager {
 	    	id.setValue(String.valueOf(s.getId()));
 	    	service.setAttributeNode(id);
 	    
-	    	
+	   
 	    	Element nome = configXML.createElement("nome");
 	    	nome.appendChild(configXML.createTextNode(s.getName().toString())); 	
 	    	service.appendChild(nome);
@@ -160,6 +183,29 @@ public class XMLManager {
 	    	Element password = configXML.createElement("password");
 	    	password.appendChild(configXML.createTextNode(s.getPassword())); 	
 	    	service.appendChild(password);
+	    	
+	    	Element ative = configXML.createElement("ative");
+	    	ative.appendChild(configXML.createTextNode(Boolean.toString(s.isAtive()))); 	
+	    	service.appendChild(ative);
+	    	
+	    	if(s.getName() == ServiceType.TWITTER) {
+	    		TwitterService twitterService = (TwitterService) s;
+	    		Element key = configXML.createElement("key");
+		    	key.appendChild(configXML.createTextNode(twitterService.getKey())); 	
+		    	service.appendChild(key);
+		    	
+		    	Element secret = configXML.createElement("secret");
+		    	secret.appendChild(configXML.createTextNode(twitterService.getSecret())); 	
+		    	service.appendChild(secret);
+		    	
+		    	Element token = configXML.createElement("token");
+		    	token.appendChild(configXML.createTextNode(twitterService.getToken())); 	
+		    	service.appendChild(token);
+		    	
+		    	Element tokenSecret = configXML.createElement("tokenSecret");
+		    	tokenSecret.appendChild(configXML.createTextNode(twitterService.getTokenSecret())); 	
+		    	service.appendChild(tokenSecret);
+	    	}
 	    	
 	    	return service;
 	    }

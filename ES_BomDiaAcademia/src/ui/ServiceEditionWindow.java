@@ -116,7 +116,7 @@ public class ServiceEditionWindow extends JFrame{
 	public static void main(String[] args) {
 		ArrayList<Service> services = new ArrayList<>();
 		services.add(new Service(1, "Email", "Rafael@gmail.com", "12345",true));
-		services.add(new Service(2, "Facebook", "Rafael", "fb12345",true));
+		services.add(new Service(2, "Facebook", "Rafael", "fb12345",false));
 		Controller.getInstance().startMyController(services);
 		new ServiceEditionWindow(services.get(0));
 	}
