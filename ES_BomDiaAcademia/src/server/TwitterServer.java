@@ -53,7 +53,7 @@ public class TwitterServer {
 	}
 
 	
-	public void tweetar () throws TwitterException{
+	public void tweetar() throws TwitterException{
 		String message = "O Gouveia vai ver isto a funcionar :) ";
 		try {
 

@@ -17,10 +17,27 @@ import engine.FacebookMessage;
 
 public class FacebookServer {
 
-	private static String accessToken ="EAAEEfx58VooBAK5arrrQPq2PYDfPYAMsk2psrTY6wG4ZBXCG13AOu1Er9cKshpMDvxLugZAuT7fzg8NkbGZBbgU1FMvNITZAzKTtvYpZB9BZCzbvZBzXOfcHrALT9VKP3ZCTRrA21ImazM7cNG5WkTWkxUj6trQvUwvVxnyEN5naUfDu9gcH7pqzMVnjzTlu3MKfLOVndyVLZCAZDZD";
-	private static FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+	private static String accessToken ="EAACfZAWzZAoH4BAKhHDMufBpFG5xdhVYuLNHxAgaPiJGZCJuoMKK7nxAvLkuw4kVq7wTvucjwKJumS6H1VUuVcnR6JKbgzKOEKZBkgQEKpMO4zF3q5ZB94wVVsAeZCjATcevVe3xpDVt8WJX4WLMY103u4ZAjgMA68ZD";
+	public static FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+	
+	private List<Group> userGroups;
+	private List<Page> userPages;
 
+	
+	public FacebookServer() {
+		userGroups = fbClient.fetchConnection("me/groups",Group.class).getData();
+		//userPages = fbClient.fetchConnection("me/pages", Page.class).getData();
+		// /pages não existe... Como é que dá para ir buscar as lista de Pages do User??
+	}
 
+	public List<Group> getUserGroups() {
+		return userGroups;
+	}
+	
+	public List<Page> getUserPages() {
+		return userPages;
+	}
+	
 	/**
 	 * This method returns the feeds published in the timeline
 	 * Each post is identified by its ID
@@ -138,10 +155,11 @@ public class FacebookServer {
 	}
 
 	public static void main(String[] args) {
-		User me = fbClient.fetchObject("me", User.class);
+		FacebookServer f= new FacebookServer();
+		User me = f.fbClient.fetchObject("me", User.class);
 		System.out.println(me.getName());
 
-		FacebookServer f= new FacebookServer();
+		
 		f.getTimelinePosts();
 //		f.getPostsFrom("group", "ES");
 //		f.postStatusToFacebook("group", "ES", "Testar Facebook java API");

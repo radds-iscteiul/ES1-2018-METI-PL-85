@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,7 +18,9 @@ public class SendWindow extends JFrame{
 
 	private JButton send;
 	protected JTextArea body;
-	//protected JPanel labels = new JPanel(new SpringLayout());
+	protected JLabel service;
+	protected JPanel labels = new JPanel(new SpringLayout());
+	protected JPanel buttons = new JPanel(new FlowLayout());
 	
 	public SendWindow() {
 		super();
@@ -35,10 +38,11 @@ public class SendWindow extends JFrame{
 		
 		body= new JTextArea ();
 		send = new JButton("Send");
+		buttons.add(send);
 		//SpringUtilities.makeCompactGrid(labels, 2, 1, 5, 5, 5, 5);
 		//this.add(labels, BorderLayout.NORTH);
 		this.add(body,BorderLayout.CENTER);
-		this.add(send,BorderLayout.SOUTH);
+		this.add(buttons,BorderLayout.SOUTH);
 		
 	}
 	

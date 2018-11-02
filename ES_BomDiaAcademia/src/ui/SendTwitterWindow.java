@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -12,10 +13,6 @@ import utils.SpringUtilities;
 
 public class SendTwitterWindow extends SendWindow{
 
-	protected JLabel service;// = new JLabel("Tweet",JLabel.TRAILING);
-	protected JLabel message;// = new JLabel("What's happening?",JLabel.TRAILING);
-	protected JPanel labels;// = new JPanel(new SpringLayout());
-	
 	private JButton loadImage;
 	private JButton loadGIF;
 	
@@ -26,18 +23,19 @@ public class SendTwitterWindow extends SendWindow{
 	}
 	
 	private void startComponents() {
-		
-		labels = new JPanel(new SpringLayout());
 		service = new JLabel("Tweet",JLabel.TRAILING);
-		message = new JLabel("What's happening?",JLabel.TRAILING);
+		service.setFont(new Font("Serif", Font.BOLD, 22));
 		labels.add(service);
-		labels.add(message);
+		SpringUtilities.makeCompactGrid(labels, 1, 1, 5, 5, 5, 5);
+		this.add(labels, BorderLayout.NORTH);
+		
+		body.setText("What's happening?");
+		
 		loadImage = new JButton("Load Image");
 		loadGIF = new JButton("Load GIF");
-		this.add(loadImage, BorderLayout.SOUTH);
-		
-		SpringUtilities.makeCompactGrid(labels, 2, 1, 5, 5, 5, 5);
-		this.add(labels, BorderLayout.NORTH);
+		this.buttons.add(loadImage);
+		this.buttons.add(loadGIF);
+		this.add(buttons, BorderLayout.SOUTH);
 	}
 	
 	
