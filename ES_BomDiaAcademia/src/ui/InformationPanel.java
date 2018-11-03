@@ -34,7 +34,7 @@ public class InformationPanel extends JPanel{
 	private MainWindow mainWindow;
 	
 	private JList<MyMessage> displayedMessages;
-	private JButton composeMessage;
+	private JButton composeEmail;
 	private JComboBox<FilterType> filters;
 	private JTextField keyword;
 	
@@ -46,11 +46,11 @@ public class InformationPanel extends JPanel{
 		
 		DefaultListModel<MyMessage> model = new DefaultListModel<MyMessage>();
 		displayedMessages = new JList<MyMessage>(model);
-		composeMessage = new JButton("Send email");
+		composeEmail = new JButton("Send email");
 		
 		JScrollPane scrollPane = new JScrollPane(displayedMessages);
 		this.add(scrollPane,BorderLayout.CENTER);
-		this.add(composeMessage,BorderLayout.SOUTH);
+		this.add(composeEmail,BorderLayout.SOUTH);
 		
 		JPanel filterPanel = new JPanel();
 		Dimension d = new Dimension(200,25);
@@ -75,7 +75,7 @@ public class InformationPanel extends JPanel{
 	}
 	
 	private void setListeners() {
-		composeMessage.addActionListener(new ActionListener() {
+		composeEmail.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
