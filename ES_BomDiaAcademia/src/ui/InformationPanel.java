@@ -22,6 +22,8 @@ import engine.FilterType;
 import engine.MyMessage;
 import engine.Service;
 import engine.ServiceType;
+import javax.swing.JOptionPane;
+
 /**
  * 
  * @author Rafael Dias
@@ -50,8 +52,6 @@ public class InformationPanel extends JPanel{
 		this.add(scrollPane,BorderLayout.CENTER);
 		this.add(composeMessage,BorderLayout.SOUTH);
 		
-		Service email = Controller.getInstance().getService(ServiceType.EMAIL);
-		
 		JPanel filterPanel = new JPanel();
 		Dimension d = new Dimension(200,25);
 		
@@ -69,22 +69,26 @@ public class InformationPanel extends JPanel{
 		
 		this.add(filterPanel,BorderLayout.NORTH);
 		
-		this.setListeners(email.getUser(),email.getPassword());
+		this.setListeners();
 		this.setVisible(true);
 		
 	}
 	
-	private void setListeners(String user,String pw) {
+	private void setListeners() {
 		composeMessage.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new SendEmailWindow(user, pw);
+				Service email = Controller.getInstance().getService(ServiceType.EMAIL);
+				if(email != null) {
+					new SendEmailWindow(email.getUser(), email.getPassword());
+				} else {
+					JOptionPane.showMessageDialog(null, "No Email account registed", "Warning",
+					        JOptionPane.WARNING_MESSAGE);
+				}
+				
 			}
 		});
-		if(user == "" && pw == "") {
-			composeMessage.setEnabled(false);
-		}
 		
 		displayedMessages.addMouseListener(new MouseAdapter() {
 		    public void mouseClicked(MouseEvent evt) {

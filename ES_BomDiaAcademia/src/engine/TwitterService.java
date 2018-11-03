@@ -30,6 +30,22 @@ public class TwitterService extends Service {
 		return key;
 	}
 
+	public void setKey(String key) {
+		this.key = key;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public void setTokenSecret(String tokenSecret) {
+		this.tokenSecret = tokenSecret;
+	}
+
 	public String getSecret() {
 		return secret;
 	}

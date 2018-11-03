@@ -24,24 +24,26 @@ import utils.SpringUtilities;
 
 public class ServiceEditionWindow extends JFrame{
 	
-	private Service service;
+	protected Service service;
+
+	JPanel fields;
 	
-	private JLabel userLabel = new JLabel("User: ",JLabel.TRAILING);
-	private JTextField user;
-	private JLabel passwordLabel = new JLabel("Password: ",JLabel.TRAILING);
-	private JTextField password;
+	protected JLabel userLabel = new JLabel("User: ",JLabel.TRAILING);
+	protected JTextField user;
+	protected JLabel passwordLabel = new JLabel("Password: ",JLabel.TRAILING);
+	protected JTextField password;
 	
-	private JButton save = new JButton("Apply");
-	private JButton cancel = new JButton("Close");
-	private JButton fastSave = new JButton("Apply and Close");
+	protected JButton save = new JButton("Apply");
+	protected JButton cancel = new JButton("Close");
+	protected JButton fastSave = new JButton("Apply and Close");
 	
 	public ServiceEditionWindow(Service s) {
 		this.setLayout(new BorderLayout());
-		this.setResizable(false);
+		//this.setResizable(false);
 		
 		service = s;
 		
-		JPanel fields = new JPanel(new SpringLayout());
+		fields = new JPanel(new SpringLayout());
 		
 		fields.add(userLabel,SpringLayout.EAST);
 		user = new JTextField(s.getUser(),15);
@@ -63,35 +65,11 @@ public class ServiceEditionWindow extends JFrame{
 		buttons.add(fastSave);
 		this.add(buttons,BorderLayout.SOUTH);
 		
-		this.setListeners();
-		start();
-	}
-
-	private boolean canSave(String word) {
-		if(word.contains("@gmail.com")) {
-			return true;
-		} else {
-			System.out.println("Must be a gmail account");
-			return false;
-		}
-	}
-	private void setListeners() {
+		this.setSaveListener();
 		cancel.addActionListener(new ActionListener() {		
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ServiceEditionWindow.this.dispose();			
-			}
-		});
-		save.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(canSave(user.getText())) {
-					service.setUser(user.getText());
-					service.setPassword(password.getText());
-					System.out.println("New user: " + service.getUser() + "; New password: " + service.getPassword());
-					Controller.getInstance().saveServicesToXML();
-				}
-				
 			}
 		});
 		fastSave.addActionListener(new ActionListener() {
@@ -104,7 +82,31 @@ public class ServiceEditionWindow extends JFrame{
 				}
 			}
 		});
-	
+		
+		start();
+	}
+
+	protected boolean canSave(String word) {
+		if(word.contains("@gmail.com")) {
+			return true;
+		} else {
+			System.out.println("Must be a gmail account");
+			return false;
+		}
+	}
+	protected void setSaveListener() {
+		save.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(canSave(user.getText())) {
+					service.setUser(user.getText());
+					service.setPassword(password.getText());
+					System.out.println("New user: " + service.getUser() + "; New password: " + service.getPassword());
+					Controller.getInstance().saveServicesToXML();
+				}
+				
+			}
+		});
 	}
 	private void start() {
 		this.setLocationRelativeTo(null);
@@ -113,11 +115,9 @@ public class ServiceEditionWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
-	public static void main(String[] args) {
-		ArrayList<Service> services = new ArrayList<>();
-		services.add(new Service(1, "Email", "Rafael@gmail.com", "12345",true));
-		services.add(new Service(2, "Facebook", "Rafael", "fb12345",false));
-		Controller.getInstance().startMyController(services);
-		new ServiceEditionWindow(services.get(0));
+	protected void updateUI() {
+		this.pack();
+		fields.updateUI();
 	}
+	
 }
