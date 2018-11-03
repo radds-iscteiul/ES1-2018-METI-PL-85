@@ -37,6 +37,7 @@ public class ServicePanel extends JPanel{
 	public JList<Service> lista;
 	private JButton pull = new JButton("Get messages");
 	public JButton toggle = new JButton("Enable");
+	public JButton editService = new JButton("Edit");
 	
 	public ServicePanel(MainWindow mw) {
 		super();
@@ -46,8 +47,10 @@ public class ServicePanel extends JPanel{
 		JPanel buttons = new JPanel();
 		pull.setPreferredSize(new Dimension(150,25));
 		toggle.setPreferredSize(new Dimension(100,25));
+		editService.setPreferredSize(new Dimension(100, 25));
 		buttons.add(pull);
 		buttons.add(toggle);
+		buttons.add(editService);
 		this.add(buttons,BorderLayout.SOUTH);
 		this.setVisible(true);
 		
@@ -166,6 +169,20 @@ public class ServicePanel extends JPanel{
 				 Controller.getInstance().addAllMessages(messages);
 				 mainWindow.updateMessageListUI();
 				
+			}
+		});
+		editService.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Service s = (Service)lista.getSelectedValue();
+				if(s instanceof TwitterService) {
+					new TwitterEditionWindow((TwitterService)s);
+				} else if(s instanceof FacebookService) {
+					
+				} else { //Email
+					new ServiceEditionWindow(s);
+				}
 			}
 		});
 	}
