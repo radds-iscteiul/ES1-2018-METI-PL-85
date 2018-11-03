@@ -11,6 +11,6 @@ public class TwitterMessage extends MyMessage{
 	@Override
 	public String toString() {
 		
-		return this.getTime() + "--"+ this.getFrom() + ":" + this.getMessage()+ "\n";
+		return super.toString() + "| "+this.getMessage();
 	}
 }

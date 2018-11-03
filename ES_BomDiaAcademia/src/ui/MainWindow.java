@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -26,7 +27,10 @@ public class MainWindow extends JFrame{
 	}
 	
 	private void start() {
-		this.setSize(new Dimension(800,500));
+		double screenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+		double screenHeight= Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+		
+		this.setSize(new Dimension((int)screenWidth - 300,(int)screenHeight - 300));
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);

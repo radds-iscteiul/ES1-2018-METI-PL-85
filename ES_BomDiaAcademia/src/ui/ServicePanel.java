@@ -69,7 +69,7 @@ public class ServicePanel extends JPanel{
 		lista.setFixedCellHeight(25);
 		JScrollPane scrollPane = new JScrollPane(lista);
 		this.add(scrollPane,BorderLayout.CENTER);
-		lista.setCellRenderer(new MyCellRenderer());
+		lista.setCellRenderer(new ServiceListCellRenderer());
 	}
 	
 	private void setListeners() {

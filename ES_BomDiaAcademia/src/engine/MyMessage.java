@@ -35,7 +35,7 @@ public abstract class MyMessage {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return super.toString();
+		return "From: "+this.from +" | " + this.time.toGMTString().substring(0, this.time.toGMTString().indexOf("GMT"));
 	}
 	
 }

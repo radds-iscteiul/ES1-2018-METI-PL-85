@@ -26,7 +26,7 @@ public class EmailMessage extends MyMessage {
 	
 	@Override
 	public String toString() {
-		return "From: " +this.getFrom() + " || Subject: " + this.getHeader();
+		return super.toString() + "| Subject: " + this.getHeader();
 	}
 			
 }

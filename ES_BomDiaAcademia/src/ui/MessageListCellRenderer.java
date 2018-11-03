@@ -4,19 +4,22 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.border.Border;
 
-import engine.Service;
+import engine.FacebookMessage;
+import engine.MyMessage;
+import engine.TwitterMessage;
 /**
  * 
  * @author Rafael Dias
  *
  */
-public class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
-    public MyCellRenderer() {
+public class MessageListCellRenderer extends JLabel implements ListCellRenderer<Object> {
+    public MessageListCellRenderer() {
         setOpaque(true);
     }
 
@@ -25,13 +28,23 @@ public class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
                                                   int index,
                                                   boolean isSelected,
                                                   boolean cellHasFocus) {
-
+    	MyMessage message = (MyMessage) value;
+    	ImageIcon imageIcon;
+    	if(message instanceof FacebookMessage) {
+    		imageIcon = new ImageIcon("images/Facebook.png");
+    	} else if(message instanceof TwitterMessage) {
+    		imageIcon = new ImageIcon("images/Twitter.png");
+    	} else {
+    		imageIcon = new ImageIcon("images/Email.png");
+    	}
+    	
         setText(value.toString());
+        setIcon(imageIcon);
 
-        Color background;
-        Color foreground;
+        Color background = Color.WHITE;
+        Color foreground = Color.BLACK;
 
-        Service s = (Service) value;
+       
         // check if this cell represents the current DnD drop location
         JList.DropLocation dropLocation = list.getDropLocation();
         if (dropLocation != null
@@ -44,26 +57,13 @@ public class MyCellRenderer extends JLabel implements ListCellRenderer<Object> {
         // check if this cell is selected
         } else if (isSelected) {
         	
-        	if(s.isAtive()){
-        		background = Color.GREEN;
-                foreground = Color.BLACK;
-        	} else {
-        		 background = Color.RED;
-                 foreground = Color.BLACK;
-        	}
             Border blackline = BorderFactory.createLineBorder(Color.black);
             setBorder(blackline);
 
         // unselected, and not the DnD drop location
         } else {
         	setBorder(null);
-        	if(s.isAtive()){
-        		background = Color.GREEN;
-                foreground = Color.BLACK;
-        	} else {
-        		 background = Color.RED;
-                 foreground = Color.BLACK;
-        	}
+        	
         };
 
      

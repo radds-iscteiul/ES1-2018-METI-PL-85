@@ -13,6 +13,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -22,7 +23,6 @@ import engine.FilterType;
 import engine.MyMessage;
 import engine.Service;
 import engine.ServiceType;
-import javax.swing.JOptionPane;
 
 /**
  * 
@@ -44,8 +44,7 @@ public class InformationPanel extends JPanel{
 		
 		this.mainWindow = mw;
 		
-		DefaultListModel<MyMessage> model = new DefaultListModel<MyMessage>();
-		displayedMessages = new JList<MyMessage>(model);
+		this.setDefaultList();
 		composeEmail = new JButton("Send email");
 		
 		JScrollPane scrollPane = new JScrollPane(displayedMessages);
@@ -74,6 +73,12 @@ public class InformationPanel extends JPanel{
 		
 	}
 	
+	private void setDefaultList() {
+		DefaultListModel<MyMessage> model = new DefaultListModel<MyMessage>();
+		displayedMessages = new JList<MyMessage>(model);
+		displayedMessages.setCellRenderer(new MessageListCellRenderer());
+		displayedMessages.setFixedCellHeight(30);
+	}
 	private void setListeners() {
 		composeEmail.addActionListener(new ActionListener() {
 			
