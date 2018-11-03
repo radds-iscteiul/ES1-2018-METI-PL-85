@@ -176,12 +176,14 @@ public class ServicePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Service s = (Service)lista.getSelectedValue();
-				if(s instanceof TwitterService) {
-					new TwitterEditionWindow((TwitterService)s);
-				} else if(s instanceof FacebookService) {
-					
-				} else { //Email
-					new ServiceEditionWindow(s);
+				if(s != null) {
+					if(s instanceof TwitterService) {
+						new TwitterEditionWindow((TwitterService)s);
+					} else if(s instanceof FacebookService) {
+						
+					} else { //Email
+						new ServiceEditionWindow(s);
+					}
 				}
 			}
 		});
