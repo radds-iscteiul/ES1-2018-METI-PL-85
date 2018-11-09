@@ -16,7 +16,7 @@ import utils.SpringUtilities;
 
 public class SendWindow extends JFrame{
 
-	private JButton send;
+	protected JButton send;
 	protected JTextArea body;
 	protected JLabel service;
 	protected JPanel labels = new JPanel(new SpringLayout());
@@ -50,7 +50,7 @@ public class SendWindow extends JFrame{
 		this.setPreferredSize(new Dimension(800, 500));
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		this.pack();
-		this.setVisible(true);
+		//this.setVisible(true);
 		this.setLocationRelativeTo(null);
 	}
 	

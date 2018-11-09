@@ -65,13 +65,13 @@ public class SendFacebookWindow extends SendWindow{
 						model.addElement(fbserver.getUserGroups().get(i).getName());
 					}
 					break;
-				case "Timeline":
+				case "Page":
 					model.removeAllElements();
 					for (int i = 0; i < fbserver.getUserPages().size(); i++) {
 						model.addElement(fbserver.getUserPages().get(i).getName());
 					}
 					break;
-				case "Page":
+				case "Timeline":
 					model.removeAllElements();
 					model.addElement("ISCTE-IUL");
 					model.addElement("IShitTécnico");
@@ -102,6 +102,26 @@ public class SendFacebookWindow extends SendWindow{
 		this.buttons.add(loadImage);
 		this.buttons.add(loadGIF);
 		this.add(buttons, BorderLayout.SOUTH);
+		this.send.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (location.getSelectedItem().toString()) {
+				case "Group":
+					fbserver.postStatusToFacebookGroup(list.getSelectedItem().toString(), body.getText());
+					break;
+				case "Timeline":
+					fbserver.postStatusToFacebookTimeline(body.getText());
+					break;
+				case "Page":
+					fbserver.postStatusToFacebookPage(list.getSelectedItem().toString(), body.getText());
+					break;
+				default:
+					break;
+				}				
+			}
+		});
+		this.setVisible(true);
 	}
 	
 	
