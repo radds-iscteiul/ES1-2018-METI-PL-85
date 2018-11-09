@@ -28,7 +28,6 @@ public class ServiceListCellRenderer extends JLabel implements ListCellRenderer<
                                                   boolean cellHasFocus) {
     	Service s = (Service) value;
     	ImageIcon imageIcon = new ImageIcon("images/" + s.getName().toString() + ".png");
-    	System.out.println(imageIcon.getImageLoadStatus());
         setText(value.toString());
         setIcon(imageIcon);
 
