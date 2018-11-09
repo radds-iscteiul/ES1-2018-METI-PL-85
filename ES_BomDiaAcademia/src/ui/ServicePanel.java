@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -16,15 +17,27 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import engine.Controller;
+import engine.FacebookService;
+import engine.MyMessage;
 import engine.Service;
-
+import engine.ServiceType;
+import engine.TwitterService;
+import server.FacebookServer;
+import server.MailServer;
+import server.TwitterServer;
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class ServicePanel extends JPanel{
 	
 	private MainWindow mainWindow;
 	
 	public JList<Service> lista;
 	private JButton pull = new JButton("Get messages");
-	public JButton toggle = new JButton("Enable/Disable");
+	public JButton toggle = new JButton("Enable");
+	public JButton editService = new JButton("Edit");
 	
 	public ServicePanel(MainWindow mw) {
 		super();
@@ -32,8 +45,12 @@ public class ServicePanel extends JPanel{
 		mainWindow = mw;
 		
 		JPanel buttons = new JPanel();
+		pull.setPreferredSize(new Dimension(150,25));
+		toggle.setPreferredSize(new Dimension(100,25));
+		editService.setPreferredSize(new Dimension(100, 25));
 		buttons.add(pull);
 		buttons.add(toggle);
+		buttons.add(editService);
 		this.add(buttons,BorderLayout.SOUTH);
 		this.setVisible(true);
 		
@@ -49,9 +66,10 @@ public class ServicePanel extends JPanel{
 			i++;
 		}
 		lista = new JList(values);
+		lista.setFixedCellHeight(25);
 		JScrollPane scrollPane = new JScrollPane(lista);
 		this.add(scrollPane,BorderLayout.CENTER);
-		lista.setCellRenderer(new MyCellRenderer());
+		lista.setCellRenderer(new ServiceListCellRenderer());
 	}
 	
 	private void setListeners() {
@@ -127,11 +145,46 @@ public class ServicePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				 List<Service> s = Controller.getInstance().getAtiveServices();
-				 System.out.println("Serviços Ativos: ");
+				 System.out.println("ServiÃ§os Ativos: ");
+				 List<MyMessage> messages = new ArrayList<MyMessage>();
 				 for (Service service : s) {
-					 System.out.println(service.toString());
+					if(service.getName() == ServiceType.TWITTER) {
+						TwitterService twitterService = (TwitterService) service;
+						TwitterServer ts = new TwitterServer(twitterService);
+						System.out.println(twitterService.getWatch());
+						messages.addAll(ts.getTweetsFromUser(twitterService.getWatch(), 10));
+					}
+					
+					if(service.getName() == ServiceType.FACEBOOK) {
+						FacebookService fbService = (FacebookService) service;
+						FacebookServer fs = new FacebookServer();
+						messages.addAll(fs.getTimelinePosts());
+					}
+					
+					if(service.getName() == ServiceType.EMAIL) {
+						MailServer emailServer = new MailServer(service.getUser(),service.getPassword());
+						messages.addAll(emailServer.receiveEmail(service.getUser(), service.getPassword()));
+					}
 				}
+				 Controller.getInstance().addAllMessages(messages);
+				 mainWindow.updateMessageListUI();
 				
+			}
+		});
+		editService.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Service s = (Service)lista.getSelectedValue();
+				if(s != null) {
+					if(s instanceof TwitterService) {
+						new TwitterEditionWindow((TwitterService)s);
+					} else if(s instanceof FacebookService) {
+						
+					} else { //Email
+						new ServiceEditionWindow(s);
+					}
+				}
 			}
 		});
 	}

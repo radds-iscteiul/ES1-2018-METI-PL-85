@@ -1,13 +1,18 @@
 package engine;
 
 import java.util.Date;
-
-public class MyMessage {
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
+public abstract class MyMessage {
 
 	private String from;
 	private Date time;
 	private String message;
 	
+		
 	public MyMessage(String from, Date time, String message) {
 		this.from= from;
 		this.time=time;
@@ -18,7 +23,8 @@ public class MyMessage {
 		return from;
 	}
 	
-	public Date getTime() {
+		
+	public Date getTime(){
 		return time;
 	}
 
@@ -29,6 +35,7 @@ public class MyMessage {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return super.toString();
+		return "From: "+this.from +" | " + this.time.toGMTString().substring(0, this.time.toGMTString().indexOf("GMT"));
 	}
+	
 }

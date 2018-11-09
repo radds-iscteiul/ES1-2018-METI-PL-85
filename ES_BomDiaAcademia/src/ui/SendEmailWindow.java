@@ -12,7 +12,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.WindowConstants;
-
 import server.MailServer;
 import utils.SpringUtilities;
 

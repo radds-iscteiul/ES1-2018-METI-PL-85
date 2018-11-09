@@ -20,7 +20,11 @@ import org.xml.sax.SAXException;
 import config.XMLManager;
 import engine.Controller;
 import engine.Service;
-
+/**
+ * 
+ * @author Rafael Dias
+ *
+ */
 public class ConfigurationWindow extends JFrame{
 
 	/**
@@ -33,6 +37,7 @@ public class ConfigurationWindow extends JFrame{
 
 	public ConfigurationWindow() {
 		this.setLayout(new BorderLayout());
+		this.setResizable(false);
 		this.startComponents();
 		this.start();
 	}

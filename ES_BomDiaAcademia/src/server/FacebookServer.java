@@ -1,73 +1,150 @@
 package server;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
-import com.restfb.FacebookClient.AccessToken;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
+import com.restfb.types.Group;
+import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
-import com.restfb.types.Page;
+import engine.FacebookMessage;
 
 public class FacebookServer {
- 
-	AccessToken token;
-	FacebookClient client;
-	
-	public FacebookServer(AccessToken token) {
-		this.token = token;
-		this.client = new DefaultFacebookClient(this.token.getAccessToken());
-	}
-	
-	public void setToken(AccessToken token) {
-		this.token = token;
-	}
-	
-	public static AccessToken getExtendedToken(String token) {
-		//String accessToken4 = "EAAE52EaM4SABAKtt8HCPYBChej1fF1T2Og8zPh7Bz4m25qKi6QljdqHqyjdUBJRui0MssgGN5yxZAaxipDHz9q2LsBEbxComjLmqvlgfSTNZARmCzxGrSLwHGjZBMMF0tdh647SeCMMf1H9OUsAS15zhNiNoufI1I8gasHKoHO3CA5W11VBrTxzikHsOJEmWA8fdcaztwZDZD";
-		FacebookClient fbClient4 = new DefaultFacebookClient(token);
-		AccessToken extendedAccessToken4 = fbClient4.obtainExtendedAccessToken("345076036067616","69e570a1a8cb764301f1c365e32e1a72");
-		System.out.println("ExtendedAccessToken: " + extendedAccessToken4.getAccessToken());
-		System.out.println("Expires: " + extendedAccessToken4.getExpires());
-		
-		return extendedAccessToken4;
-	}
-	
-	public void printNameID() {
-		User me = this.client.fetchObject("me", User.class );
-		System.out.println(me.getId());
-		System.out.println(me.getName());
+
+	private static String accessToken ="EAACfZAWzZAoH4BAKhHDMufBpFG5xdhVYuLNHxAgaPiJGZCJuoMKK7nxAvLkuw4kVq7wTvucjwKJumS6H1VUuVcnR6JKbgzKOEKZBkgQEKpMO4zF3q5ZB94wVVsAeZCjATcevVe3xpDVt8WJX4WLMY103u4ZAjgMA68ZD";
+	public static FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+
+	private List<Group> userGroups;
+	private List<Page> userPages;
+
+
+	public FacebookServer() {
+		userGroups = fbClient.fetchConnection("me/groups",Group.class).getData();
+		userPages = fbClient.fetchConnection("me/likes", Page.class).getData();
 	}
 
-	public void findAndPrintPost(String wordToFind) {
-		Connection<Post> result = client.fetchConnection("me/feed",Post.class);
-		System.out.println("\nPosts:");
-		int counter5 = 0;
-		int counterTotal = 0;
-		for (List<Post> page : result) {
-			for (Post aPost : page) {
-				// Filters only posts that contain the word "Inform"
-				if (aPost.getMessage() != null && aPost.getMessage().contains(wordToFind)) {
-					counter5++;
-					System.out.println("---- Post "+ counter5 + " ----");
-					System.out.println("Id: "+"fb.com/"+aPost.getId());
-					System.out.println("Message: "+aPost.getMessage());
-					System.out.println("Created: "+aPost.getCreatedTime());
-									}
-				counterTotal++;
+	public List<Group> getUserGroups() {
+		return userGroups;
+	}
+
+	public List<Page> getUserPages() {
+		return userPages;
+	}
+
+	/**
+	 * This method returns the feeds published in the timeline
+	 * Each post is identified by its ID
+	 * Finally, count the total number of posts
+	 */
+	public List<FacebookMessage>  getTimelinePosts() {
+		List<FacebookMessage> fb = new ArrayList<FacebookMessage>();
+		int counter=0;
+		Connection<Post> result = fbClient.fetchConnection("me/feed",Post.class);
+
+		for(List<Post> page : result){	
+			for(Post aPost : page){
+				fb.add(new FacebookMessage("fb.com/"+aPost.getId(), aPost.getCreatedTime(),aPost.getMessage()));
+				System.out.println("ID: fb.com/"+aPost.getId());
+				System.out.println("Date :"+aPost.getCreatedTime());
+				System.out.println("Message: "+aPost.getMessage());
+				System.out.println("\n");
+				counter++;
 			}
 		}
-		System.out.println("-------------\nN∫ of Results: " + counter5+"/"+counterTotal);
+		System.out.println("Number of Results "+counter);
+		return fb;
 	}
+
+
+	/**
+	 * This method returns the posts of the selected group or page
+	 * Requires either admin permissions or member using installed app
+	 */
+	public List<FacebookMessage> getPostsFrom(String choose, String name){
+		List<FacebookMessage> fb = new ArrayList<FacebookMessage>();
+		Connection<Group> groups = fbClient.fetchConnection("me/groups",Group.class);
+		if(choose.equals("group")){
+			for(List<Group> groupPage : groups){
+				for(Group aGroup : groupPage){
+					if(name.equals(aGroup.getName())){
+						Connection<Post> postFeed = fbClient.fetchConnection(aGroup.getId()+"/feed", Post.class );
+						for(List<Post> postPage: postFeed){
+							for(Post aPost : postPage){
+								fb.add(new FacebookMessage(aPost.getId(), aPost.getCreatedTime(),aPost.getMessage()));
+								System.out.println("ID: fb.com/"+aPost.getId());
+								System.out.println("Date :"+aPost.getCreatedTime());
+								System.out.println("Message: "+aPost.getMessage());
+								System.out.println("\n");
+							}
+						}
+					}
+				}
+			}
+		}
+		if(choose.equals("page")){
+			Page page = fbClient.fetchObject(name, Page.class);
+			Connection<Post> postFeed = fbClient.fetchConnection(page.getId()+"/feed", Post.class);
+			for(List<Post> postPage : postFeed){
+				for(Post aPost: postPage){
+					fb.add(new FacebookMessage(aPost.getId(), aPost.getCreatedTime(),aPost.getMessage()));
+					System.out.println("ID: fb.com/"+aPost.getId());
+					System.out.println("Date :"+aPost.getCreatedTime());
+					System.out.println("Message: "+aPost.getMessage());
+					System.out.println("\n");
+				}
+			}
+		}
+		return fb;
+	}
+
+	public void postStatusToFacebookGroup(String name, String msg){
+		for(Group group: userGroups){
+			if(name.equals(group.getName())){
+				System.out.println("encontrou grupo");
+				FacebookType response = fbClient.publish(group.getId()+"/feed",  FacebookType.class,
+						Parameter.with("message", msg)	
+						);
+				System.out.println("fb.com/"+response.getId());
+			}
+		}
+	}
+
+
+	public void postStatusToFacebookPage(String name, String msg){
+		for(Page page: userPages){
+			if(name.equals(page.getName())){
+				System.out.println("encontrou p√°gina");
+				FacebookType response = fbClient.publish(page.getId()+"/feed",  FacebookType.class,
+						Parameter.with("message", msg)	
+						);
+				System.out.println("fb.com/"+response.getId());
+			}
+		}
+	}
+
+	public void postStatusToFacebookTimeline(String msg){
+//		Requires either publish_to_groups permission and app being installed in the group, or manage_pages and publish_pages as an admin with sufficient administrative permission
+		FacebookType response3 = fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", msg));
+		System.out.println("fb.com/"+response3.getId());
+	}
+
 	
 	public static void main(String[] args) {
-	
-	String accessToken4 = "EAAE52EaM4SABAJYmsL5FkH9zbY2oWyepLTFy0F7AJqBg05ho6JUGkDYwceG5WYa0YmZBuDwMFP9fpqY67vZAdGFZBPySNqO3nVwTBvdr7ZCqVBzz28l4hK4e6e9zJgpFq7BmjvAdXhWLvGZAR0oloBUp8P2bSYbf0F4HzVP3VSzjx09kcc3FY4oldB1d8PxYfoJ4oZB0S5wQZDZD";
-	FacebookServer fserver = new FacebookServer(getExtendedToken(accessToken4));
-	fserver.printNameID();
-	fserver.findAndPrintPost("ISCTE");
-	
+		FacebookServer f= new FacebookServer();
+		User me = f.fbClient.fetchObject("me", User.class);
+		System.out.println(me.getName());
+
+//		f.getTimelinePosts();
+//		f.getPostsFrom("group", "ES");
+		f.postStatusToFacebookGroup("ES", "Mais um teste");
+
 	}
+
 }
 

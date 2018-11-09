@@ -8,7 +8,6 @@ public class EmailMessage extends MyMessage {
 	
 	private String to;
 	private String header;
-		
 	
 	public EmailMessage(String from, String to, String header, Date time, String message) {
 		super(from, time, message);
@@ -27,7 +26,7 @@ public class EmailMessage extends MyMessage {
 	
 	@Override
 	public String toString() {
-		return "From: " +this.getFrom() + " || Subject: " + this.getHeader();
+		return super.toString() + "| Subject: " + this.getHeader();
 	}
 			
 }
