@@ -182,15 +182,22 @@ public class InformationPanel extends JPanel{
 			keyword.setEditable(false);
 			keyword.setText("");
 		
+			displayedMessages.removeAll();
+			List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
+			DefaultListModel<MyMessage> newModel = new DefaultListModel<MyMessage>();
+			
 			if(type.getFilterValue().equals("None")){									
-				List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
-				displayedMessages.removeAll();
-				DefaultListModel<MyMessage> newModel = new DefaultListModel<MyMessage>();
-				for (MyMessage m : allMessages) {
-					newModel.addElement(m);
-				}
-				displayedMessages.setModel(newModel);
-			} 
+	
+			} else if(type.getFilterValue().equals("Recent")) {
+				allMessages = Controller.getInstance().orderMessageByDateD(allMessages);
+			} else if(type.getFilterValue().equals("Older")) {
+				allMessages = Controller.getInstance().orderMessageByDateC(allMessages);
+			}
+			
+			for (MyMessage m : allMessages) {
+				newModel.addElement(m);
+			}
+			displayedMessages.setModel(newModel);
 		}
 		this.displayedMessages.updateUI();
 	}

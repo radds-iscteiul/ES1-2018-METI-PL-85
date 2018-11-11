@@ -151,13 +151,12 @@ public class ServicePanel extends JPanel{
 					if(service.getName() == ServiceType.TWITTER) {
 						TwitterService twitterService = (TwitterService) service;
 						TwitterServer ts = new TwitterServer(twitterService);
-						System.out.println(twitterService.getWatch());
 						messages.addAll(ts.getTweetsFromUser(twitterService.getWatch(), 10));
 					}
 					
 					if(service.getName() == ServiceType.FACEBOOK) {
 						FacebookService fbService = (FacebookService) service;
-						FacebookServer fs = new FacebookServer();
+						FacebookServer fs = new FacebookServer(fbService);
 						messages.addAll(fs.getTimelinePosts());
 					}
 					
@@ -180,7 +179,7 @@ public class ServicePanel extends JPanel{
 					if(s instanceof TwitterService) {
 						new TwitterEditionWindow((TwitterService)s);
 					} else if(s instanceof FacebookService) {
-						
+						new FacebookEditionWindow((FacebookService)s);
 					} else { //Email
 						new ServiceEditionWindow(s);
 					}

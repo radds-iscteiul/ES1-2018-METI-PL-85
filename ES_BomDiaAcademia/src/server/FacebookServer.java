@@ -1,9 +1,8 @@
 package server;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
+
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -13,18 +12,23 @@ import com.restfb.types.Group;
 import com.restfb.types.Page;
 import com.restfb.types.Post;
 import com.restfb.types.User;
+
 import engine.FacebookMessage;
+import engine.FacebookService;
 
 public class FacebookServer {
 
-	private static String accessToken ="EAACfZAWzZAoH4BAKhHDMufBpFG5xdhVYuLNHxAgaPiJGZCJuoMKK7nxAvLkuw4kVq7wTvucjwKJumS6H1VUuVcnR6JKbgzKOEKZBkgQEKpMO4zF3q5ZB94wVVsAeZCjATcevVe3xpDVt8WJX4WLMY103u4ZAjgMA68ZD";
-	public static FacebookClient fbClient = new DefaultFacebookClient(accessToken);
+	private static String accessToken;
+	public static FacebookClient fbClient;
 
 	private List<Group> userGroups;
 	private List<Page> userPages;
 
 
-	public FacebookServer() {
+	public FacebookServer(FacebookService fbs) {
+		accessToken = fbs.getToken();
+		fbClient = new DefaultFacebookClient(accessToken);
+		
 		userGroups = fbClient.fetchConnection("me/groups",Group.class).getData();
 		userPages = fbClient.fetchConnection("me/likes", Page.class).getData();
 	}
@@ -132,18 +136,6 @@ public class FacebookServer {
 //		Requires either publish_to_groups permission and app being installed in the group, or manage_pages and publish_pages as an admin with sufficient administrative permission
 		FacebookType response3 = fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", msg));
 		System.out.println("fb.com/"+response3.getId());
-	}
-
-	
-	public static void main(String[] args) {
-		FacebookServer f= new FacebookServer();
-		User me = f.fbClient.fetchObject("me", User.class);
-		System.out.println(me.getName());
-
-//		f.getTimelinePosts();
-//		f.getPostsFrom("group", "ES");
-		f.postStatusToFacebookGroup("ES", "Mais um teste");
-
 	}
 
 }

@@ -14,11 +14,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import engine.FacebookService;
 import server.FacebookServer;
 
 public class SendFacebookWindow extends SendWindow{
 
-	private FacebookServer fbserver = new FacebookServer();
+	private FacebookServer fbserver;
 	
 	private JButton loadImage;
 	private JButton loadGIF;
@@ -29,8 +30,10 @@ public class SendFacebookWindow extends SendWindow{
 	private GridBagConstraints c = new GridBagConstraints();
 	DefaultComboBoxModel model;
 	
-	public SendFacebookWindow() {
+	public SendFacebookWindow(FacebookService fbs) {
 		super();
+		fbserver = new FacebookServer(fbs);
+		
 		labels = new JPanel(new GridBagLayout());
 		startComponents();
 		this.pack();
@@ -122,10 +125,5 @@ public class SendFacebookWindow extends SendWindow{
 			}
 		});
 		this.setVisible(true);
-	}
-	
-	
-	public static void main(String[] args) {
-		new SendFacebookWindow();
 	}
 }

@@ -41,7 +41,7 @@ public class TwitterServer {
 			for (Status status : statuses) {
 				if (status.getUser().getName() != null /*&& status.getText().contains("")*/) {
 					//System.out.println(status.getUser().getName() + ":" + status.getText());
-					tweets.add(new TwitterMessage(status.getUser().getName(),status.getUser().getCreatedAt(),status.getText()));
+					tweets.add(new TwitterMessage(status.getUser().getName(),status.getCreatedAt(),status.getText()));
 					//counter++;
 				}
 				//counterTotal++;
