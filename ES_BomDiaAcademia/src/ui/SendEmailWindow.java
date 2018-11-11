@@ -55,7 +55,7 @@ public class SendEmailWindow extends MessageWindow{
 
 	public static void main(String[] args) {
 		String user = "metiG85.2018@gmail.com";
-		String password = "RbDi1802&";
+		String password = "RbDi1802";
 		SendEmailWindow email = new SendEmailWindow(user,password);
 	}
 }
