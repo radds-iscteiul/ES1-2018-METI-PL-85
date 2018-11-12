@@ -67,7 +67,7 @@ public class ConfigurationWindow extends JFrame{
 				fd.setFile("*.xml");
 				fd.setVisible(true);
 				String path = fd.getDirectory() + fd.getFile();
-				if (path != null) {
+				if (fd.getDirectory() != null && fd.getFile() != null) {
 					ConfigurationWindow.this.path.setText(path);
 				}
 				  
@@ -99,10 +99,5 @@ public class ConfigurationWindow extends JFrame{
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-	}
-	
-	public static void main(String[] args) {
-		ConfigurationWindow mw = new ConfigurationWindow();
-		
 	}
 }

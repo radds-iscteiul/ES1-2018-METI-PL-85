@@ -14,11 +14,12 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import engine.FacebookService;
 import server.FacebookServer;
 
 public class SendFacebookWindow extends SendWindow{
 
-	private FacebookServer fbserver = new FacebookServer();
+	private FacebookServer fbserver;
 	
 	private JButton loadImage;
 	private JButton loadGIF;
@@ -29,8 +30,10 @@ public class SendFacebookWindow extends SendWindow{
 	private GridBagConstraints c = new GridBagConstraints();
 	DefaultComboBoxModel model;
 	
-	public SendFacebookWindow() {
+	public SendFacebookWindow(FacebookService fbs) {
 		super();
+		fbserver = new FacebookServer(fbs);
+		
 		labels = new JPanel(new GridBagLayout());
 		startComponents();
 		this.pack();
@@ -65,13 +68,13 @@ public class SendFacebookWindow extends SendWindow{
 						model.addElement(fbserver.getUserGroups().get(i).getName());
 					}
 					break;
-				case "Timeline":
+				case "Page":
 					model.removeAllElements();
 					for (int i = 0; i < fbserver.getUserPages().size(); i++) {
 						model.addElement(fbserver.getUserPages().get(i).getName());
 					}
 					break;
-				case "Page":
+				case "Timeline":
 					model.removeAllElements();
 					model.addElement("ISCTE-IUL");
 					model.addElement("IShitTécnico");
@@ -102,10 +105,25 @@ public class SendFacebookWindow extends SendWindow{
 		this.buttons.add(loadImage);
 		this.buttons.add(loadGIF);
 		this.add(buttons, BorderLayout.SOUTH);
-	}
-	
-	
-	public static void main(String[] args) {
-		new SendFacebookWindow();
+		this.send.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch (location.getSelectedItem().toString()) {
+				case "Group":
+					fbserver.postStatusToFacebookGroup(list.getSelectedItem().toString(), body.getText());
+					break;
+				case "Timeline":
+					fbserver.postStatusToFacebookTimeline(body.getText());
+					break;
+				case "Page":
+					fbserver.postStatusToFacebookPage(list.getSelectedItem().toString(), body.getText());
+					break;
+				default:
+					break;
+				}				
+			}
+		});
+		this.setVisible(true);
 	}
 }

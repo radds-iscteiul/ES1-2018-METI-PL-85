@@ -20,6 +20,7 @@ import javax.swing.WindowConstants;
 
 import engine.Controller;
 import engine.Service;
+import engine.ServiceType;
 import utils.SpringUtilities;
 
 public class ServiceEditionWindow extends JFrame{
@@ -87,11 +88,11 @@ public class ServiceEditionWindow extends JFrame{
 	}
 
 	protected boolean canSave(String word) {
-		if(word.contains("@gmail.com")) {
-			return true;
-		} else {
+		if(!word.contains("@gmail.com") && service.getName() == ServiceType.EMAIL) {
 			System.out.println("Must be a gmail account");
 			return false;
+		} else {
+			return true;
 		}
 	}
 	protected void setSaveListener() {

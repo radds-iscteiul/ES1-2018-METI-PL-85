@@ -7,11 +7,19 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="testing"/>
+<<<<<<< HEAD
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+=======
+	<classpathentry kind="lib" path="libs/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/mail-1.4.5.jar" sourcepath="libs/mail-1.4.5.jar"/>
+	<classpathentry kind="lib" path="libs/mail-sender-0.5.1.jar"/>
+	<classpathentry kind="lib" path="libs/restfb-2.9.0.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+>>>>>>> refs/heads/Sprint_1
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="libs/activation-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/javax.faces-api-2.0.jar"/>

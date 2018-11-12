@@ -182,30 +182,20 @@ public class InformationPanel extends JPanel{
 			keyword.setEditable(false);
 			keyword.setText("");
 		
-			DefaultListModel<MyMessage> newModel =  newModel = new DefaultListModel<MyMessage>();;
+			displayedMessages.removeAll();
+			List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
+			DefaultListModel<MyMessage> newModel = new DefaultListModel<MyMessage>();
+			
 			if(type.getFilterValue().equals("None")){									
-				List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
-				displayedMessages.removeAll();
-				for (MyMessage m : allMessages) {
-					newModel.addElement(m);
-				}
-
-			}else if(type.getFilterValue().equals("Recent")) {
-				List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
-				displayedMessages.removeAll();
+	
+			} else if(type.getFilterValue().equals("Recent")) {
 				allMessages = Controller.getInstance().orderMessageByDateD(allMessages);
-				for (MyMessage m : allMessages) {
-					newModel.addElement(m);
-				}
-
 			} else if(type.getFilterValue().equals("Older")) {
-				List<MyMessage> allMessages = Controller.getInstance().getAllMessages();
-				displayedMessages.removeAll();
 				allMessages = Controller.getInstance().orderMessageByDateC(allMessages);
-				for (MyMessage m : allMessages) {
-					newModel.addElement(m);
-				}
-				
+			}
+			
+			for (MyMessage m : allMessages) {
+				newModel.addElement(m);
 			}
 			displayedMessages.setModel(newModel);
 		}

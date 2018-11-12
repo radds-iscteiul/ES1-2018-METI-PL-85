@@ -246,6 +246,7 @@ public class Controller{
 	public List<MyMessage> orderMessageByDateD (List<MyMessage> list){
 		List<MyMessage> invert = orderMessageByDateC(list);
 		Collections.reverse(invert);
+		System.out.println("Ordem decrescente:" + invert);
 		return invert;
 	}
 

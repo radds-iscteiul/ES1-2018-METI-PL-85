@@ -20,6 +20,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import engine.FacebookService;
 import engine.Service;
 import engine.ServiceType;
 import engine.TwitterService;
@@ -130,7 +131,7 @@ public class XMLManager {
 	                    if(nome.equals("Twitter")) {
 	                    	listaServicos.add(new TwitterService(Integer.valueOf(id),nome,user,password,ative,watch,key,secret,token,tokenSecret));
 	                    } else if(nome.equals("Facebook")) {
-	                    	listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
+	                    	listaServicos.add(new FacebookService(Integer.valueOf(id),nome,user,password,ative,token));
 	                    } else if(nome.equals("Email")) {
 	                    	 listaServicos.add(new Service(Integer.valueOf(id),nome,user,password,ative));
 	                    }
@@ -205,20 +206,13 @@ public class XMLManager {
 		    	Element tokenSecret = configXML.createElement("tokenSecret");
 		    	tokenSecret.appendChild(configXML.createTextNode(twitterService.getTokenSecret())); 	
 		    	service.appendChild(tokenSecret);
+		    	
+	    	} else if(s.getName() == ServiceType.FACEBOOK) {
+	    		FacebookService facebookService = (FacebookService) s;
+	    		Element token = configXML.createElement("token");
+		    	token.appendChild(configXML.createTextNode(facebookService.getToken())); 	
+		    	service.appendChild(token);
 	    	}
-	    	
 	    	return service;
 	    }
-
-	    public static void main(String[] args) {
-	    	
-	    	ArrayList<Service> services = new ArrayList<Service>();
-	    	services.add(new Service(1, "Email", "a@gmail.com", "password",true));
-			try {
-				new XMLManager().writeXML(services);
-			} catch (TransformerException | ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 }

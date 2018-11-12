@@ -63,7 +63,6 @@ public class TwitterEditionWindow extends ServiceEditionWindow{
 		super.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("oi");
 				TwitterService twitterService = (TwitterService)service;
 				twitterService.setUser(user.getText());
 				twitterService.setPassword(password.getText());
@@ -78,13 +77,4 @@ public class TwitterEditionWindow extends ServiceEditionWindow{
 			}
 		});
 	}
-	
-	public static void main(String[] args) {
-		ArrayList<Service> services = new ArrayList<>();
-		services.add(new TwitterService(1, "Twitter", "Rafael@gmail.com", "12345",true, "aa", "bb", "cc", "dd", "ee"));
-		services.add(new Service(2, "Facebook", "Rafael", "fb12345",false));
-		Controller.getInstance().startMyController(services);
-		new TwitterEditionWindow((TwitterService)services.get(0));
-	}
-
 }
