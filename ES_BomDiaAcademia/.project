@@ -10,8 +10,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>pt.iscte.dcti.expressionsview.functionBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>pt.iscte.dcti.expressionsview.functionTestNature</nature>
 	</natures>
 </projectDescription>
