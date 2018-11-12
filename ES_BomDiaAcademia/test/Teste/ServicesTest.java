@@ -1,15 +1,12 @@
-package junits;
+package Teste;
 
-
-
-import static org.junit.Assert.*;
-import org.junit.Test;
 import engine.Service;
+import junit.framework.TestCase;
 
 
-public class ServicesTest {
+public class ServicesTest extends TestCase
+{
 
-	@Test
 	public void testServicesInit() {
 		Service service=new Service(1, "Email", "Rafael", "pass",true);
 		

@@ -1,21 +1,15 @@
-package junits;
-
-import static org.junit.Assert.assertEquals;
+package Teste;
 
 import java.util.ArrayList;
 
-import javax.swing.plaf.ColorUIResource;
-
-import org.junit.Test;
-
-import com.sun.prism.paint.Color;
-
 import engine.Controller;
 import engine.Service;
+import junit.framework.TestCase;
 import ui.MainWindow;
 import ui.ServicePanel;
 
-public class ServicePanelTest {
+public class ServicePanelTest extends TestCase
+{
 	
 	Service email = new Service(1,"Email", "metiG85.2018@gmail.com", "pw",true);
 	Service facebook = new Service(2,"Facebook","Bárbara","pw",true);	
@@ -25,7 +19,6 @@ public class ServicePanelTest {
 	ServicePanel sp;
 	boolean ative;
 	
-	@Test
 	public void testAtiveToggle() {
 		aux.add(email);
 		aux.add(facebook);

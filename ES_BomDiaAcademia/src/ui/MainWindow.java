@@ -41,4 +41,11 @@ public class MainWindow extends JFrame{
 		ip.updateMessageUI();
 	}
 	
+	public JPanel getServicePanel() {
+		return this.servicePanel;
+	}
+	
+	public JPanel getInformationPanel() {
+		return this.informationPanel;
+	}
 }

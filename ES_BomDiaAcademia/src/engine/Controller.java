@@ -51,17 +51,21 @@ public class Controller{
 		this.readConfigurations(s);	
 		mainWindow = new MainWindow();
 		allMessages = new ArrayList<MyMessage>();
-		allMessages.add(new EmailMessage("Rafael", "In�s","Aprsenta��o",new Date(), "Ol�, sou o Rafael, tudo bem?"));
-		allMessages.add(new EmailMessage("Rafael","Marta","Declara��o", new Date(), "Two week in a virginia jail, for my lover, for my lover"));
 	}
 	/**
 	 * @author Rafael Dias
 	 * @param ArrayList<Service>
 	 * Initializes from the ArrayList given by the XMLManager which provides the configuration file data.
 	 */
-	private void readConfigurations(ArrayList<Service> s) {
-		for (Service service : s) {		
-			servicos.put(service.getName(), service);	
+	private boolean readConfigurations(ArrayList<Service> s) {
+		try {
+			for (Service service : s) {		
+				servicos.put(service.getName(), service);	
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return true;
 		}
 	}
 	/**
@@ -152,13 +156,15 @@ public class Controller{
 	}
 
 
-	public void saveServicesToXML() {
+	public boolean saveServicesToXML() {
 		XMLManager xmlM = new XMLManager();
 		try {
 			xmlM.writeXML(this.getAllServices());
+			return true;
 		} catch (TransformerException | ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return false;
 		}
 	}
 

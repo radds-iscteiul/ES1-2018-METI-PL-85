@@ -35,6 +35,7 @@ public class ServicePanel extends JPanel{
 	private MainWindow mainWindow;
 	
 	public JList<Service> lista;
+
 	private JButton pull = new JButton("Get messages");
 	public JButton toggle = new JButton("Enable");
 	public JButton editService = new JButton("Edit");
@@ -188,4 +189,16 @@ public class ServicePanel extends JPanel{
 		});
 	}
 	
+	public JList<Service> getServiceList() {
+		return lista;
+	}
+	public JButton getMessagePullButton() {
+		return pull;
+	}
+	public JButton getToggleButton() {
+		return toggle;
+	}
+	public JButton getEditServiceButton() {
+		return editService;
+	}
 }
